@@ -21,9 +21,9 @@ jobs:
 
       - name: Deploy WAR to Local JBoss
         env:
-          JBOSS_HOME: '/path/to/jboss'
+          JBOSS_HOME: 'C:\Users\somas\EAP-7.4.0'
           JBOSS_CONFIG: 'standalone'
-          WAR_PATH: 'path/to/your/war/file.war'
+          WAR_PATH: 'dist/helloworld.war'
         run: |
           # Set the JBOSS_HOME environment variable
           echo "export JBOSS_HOME=${JBOSS_HOME}" >> $GITHUB_ENV
