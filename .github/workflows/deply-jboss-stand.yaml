@@ -1,13 +1,13 @@
 name: Deploy WAR to JBoss
 
-#on:
-  #push:
-    #branches:
-      #- master
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: saas-runner
 
     steps:
       - name: Checkout code
