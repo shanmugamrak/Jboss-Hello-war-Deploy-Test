@@ -24,7 +24,7 @@ jobs:
           JBOSS_USERNAME: ${{ secrets.JBOSS_USERNAME }}
           JBOSS_PASSWORD: ${{ secrets.JBOSS_PASSWORD }}
           WAR_PATH: 'path/to/your/war/file.war'
-          
+    steps:     
       - name: Deploy
         run: |
           DEPLOY_DIR=$(mktemp -d)
