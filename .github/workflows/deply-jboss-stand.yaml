@@ -11,16 +11,12 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
-
-    steps:
       - uses: actions/checkout@v3
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           java-version: '17'
-          distribution: 'temurin'
-          
+          distribution: 'temurin'      
     steps:
       - name: Deploy WAR to JBoss
         env:
@@ -28,19 +24,15 @@ jobs:
           JBOSS_USERNAME: ${{ secrets.JBOSS_USERNAME }}
           JBOSS_PASSWORD: ${{ secrets.JBOSS_PASSWORD }}
           WAR_PATH: 'path/to/your/war/file.war'
+          
+      - name: Deploy
         run: |
-# Create a temporary deployment directory
           DEPLOY_DIR=$(mktemp -d)
-
-# Copy the WAR file to the deployment directory
           cp $WAR_PATH $DEPLOY_DIR/
-
-# Use JBoss CLI to deploy the WAR file
           JBOSS_CLI=$DEPLOY_DIR/jboss-cli.sh
           echo "embed-server --admin-only=true" > $JBOSS_CLI
           echo "deploy $DEPLOY_DIR/$(basename $WAR_PATH)" >> $JBOSS_CLI
           echo "exit" >> $JBOSS_CLI
           $JBOSS_CLI --connect --controller=$JBOSS_ENDPOINT --user=$JBOSS_USERNAME --password=$JBOSS_PASSWORD
 
-# Cleanup the temporary deployment directory
           rm -rf $DEPLOY_DIR
