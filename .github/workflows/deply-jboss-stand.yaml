@@ -20,6 +20,8 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
+          
+    steps:
       - name: Deploy WAR to JBoss
         env:
           JBOSS_ENDPOINT: ${{ secrets.JBOSS_ENDPOINT }}
