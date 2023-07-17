@@ -25,12 +25,15 @@ jobs:
        
       - name: Deploy to Jboss
         run: |
+          curl -u $JBOSS_USERNAME:$JBOSS_PASSWORD -T $WAR_PATH $JBOSS_ENDPOINT/management-webapp/undeploy?name=$(basename $WAR_PATH)
+          sleep 5
+          curl -u $JBOSS_USERNAME:$JBOSS_PASSWORD -T $WAR_PATH $JBOSS_ENDPOINT/management-webapp/deploy?name=$(basename $WAR_PATH)
         
-          DEPLOY_DIR=$(mktemp -d)
-          cp $WAR_PATH $DEPLOY_DIR/
-          JBOSS_CLI=$DEPLOY_DIR/jboss-cli.sh
-          echo "embed-server --admin-only=true" > $JBOSS_CLI
-          echo "deploy $DEPLOY_DIR/$(basename $WAR_PATH)" >> $JBOSS_CLI
-          echo "exit" >> $JBOSS_CLI
-          $JBOSS_CLI --connect --controller=$JBOSS_ENDPOINT --user=$JBOSS_USERNAME --password=$JBOSS_PASSWORD
-          rm -rf $DEPLOY_DIR
+#          DEPLOY_DIR=$(mktemp -d)
+#          cp $WAR_PATH $DEPLOY_DIR/
+#          JBOSS_CLI=$DEPLOY_DIR/jboss-cli.sh
+#          echo "embed-server --admin-only=true" > $JBOSS_CLI
+#          echo "deploy $DEPLOY_DIR/$(basename $WAR_PATH)" >> $JBOSS_CLI
+#          echo "exit" >> $JBOSS_CLI
+#          $JBOSS_CLI --connect --controller=$JBOSS_ENDPOINT --user=$JBOSS_USERNAME --password=$JBOSS_PASSWORD
+#          rm -rf $DEPLOY_DIR
