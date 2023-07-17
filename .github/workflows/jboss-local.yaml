@@ -1,0 +1,35 @@
+name: Deploy WAR to Local JBoss
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+
+      - name: Deploy WAR to Local JBoss
+        env:
+          JBOSS_HOME: '/path/to/jboss'
+          JBOSS_CONFIG: 'standalone'
+          WAR_PATH: 'path/to/your/war/file.war'
+        run: |
+          # Set the JBOSS_HOME environment variable
+          echo "export JBOSS_HOME=${JBOSS_HOME}" >> $GITHUB_ENV
+
+          # Build the JBoss CLI command
+          JBOSS_CLI="${JBOSS_HOME}/bin/jboss-cli.sh"
+          DEPLOY_COMMAND="/server=${JBOSS_CONFIG}:deploy ${WAR_PATH}"
+          
+          # Execute the JBoss CLI command
+          $JBOSS_CLI --connect --command="${DEPLOY_COMMAND}"
