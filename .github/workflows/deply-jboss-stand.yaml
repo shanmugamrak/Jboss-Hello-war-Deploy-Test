@@ -1,9 +1,9 @@
 name: Deploy WAR to JBoss
 
-on:
-  push:
-    branches:
-      - master
+#on:
+  #push:
+    #branches:
+      #- master
 
 jobs:
   deploy:
@@ -21,7 +21,7 @@ jobs:
           JBOSS_ENDPOINT: ${{ secrets.JBOSS_ENDPOINT }}
           JBOSS_USERNAME: ${{ secrets.JBOSS_USERNAME }}
           JBOSS_PASSWORD: ${{ secrets.JBOSS_PASSWORD }}
-          WAR_PATH: '/dist/helloworld.war'
+          WAR_PATH: 'dist/helloworld.war'
        
       - name: Deploy to Jboss
         run: |
