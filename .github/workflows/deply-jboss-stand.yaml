@@ -1,6 +1,7 @@
 name: Deploy WAR to JBoss
 
-#on:
+on:
+  workflow_dispatch:
   #push:
     #branches:
       #- master
