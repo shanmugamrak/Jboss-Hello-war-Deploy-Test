@@ -8,7 +8,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: self-hosted
+    runs-on: windows-latest
 
     steps:
       - name: Checkout code
@@ -22,7 +22,7 @@ jobs:
 
       - name: Deploy WAR to JBoss
         env:
-          JBOSS_ENDPOINT: 'http://127.0.0.1:9990/'
+          JBOSS_ENDPOINT: 'http://10.10.1.158:8080/' #'http://127.0.0.1:9990/'
           JBOSS_USERNAME: ${{ secrets.JBOSS_USERNAME }}
           JBOSS_PASSWORD: ${{ secrets.JBOSS_PASSWORD }}
         run: |
