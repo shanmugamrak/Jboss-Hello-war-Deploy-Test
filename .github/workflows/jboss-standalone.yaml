@@ -32,4 +32,4 @@ jobs:
 
           # Execute JBoss CLI command to deploy the WAR file
           echo "Connecting to JBoss server..."
-          $JBOSS_CLI --connect --controller=$JBOSS_ENDPOINT --user=$JBOSS_USERNAME --password=$JBOSS_PASSWORD --command="$DEPLOY_COMMAND"
+          $JBOSS_CLI --controller=$JBOSS_ENDPOINT --user=$JBOSS_USERNAME --password=$JBOSS_PASSWORD --command="$DEPLOY_COMMAND"
