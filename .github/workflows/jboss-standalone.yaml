@@ -27,9 +27,10 @@ jobs:
           JBOSS_PASSWORD: ${{ secrets.JBOSS_PASSWORD }}
         run: |
           # Set up JBoss CLI command
-          JBOSS_CLI="$JBOSS_HOME/bin/jboss-cli.sh" #--connect --controller=127.0.0.1:9990
+          JBOSS_CLI="$JBOSS_HOME/bin/jboss-cli.sh" --connect --controller=$JBOSS_ENDPOINT #127.0.0.1:9990
           DEPLOY_COMMAND="deploy dist/helloworld.war"
 
           # Execute JBoss CLI command to deploy the WAR file
           echo "Connecting to JBoss server..."
-          $JBOSS_CLI --controller=$JBOSS_ENDPOINT --user=$JBOSS_USERNAME --password=$JBOSS_PASSWORD --command="$DEPLOY_COMMAND"
+          #$JBOSS_CLI --controller=$JBOSS_ENDPOINT 
+          --user=$JBOSS_USERNAME --password=$JBOSS_PASSWORD --command="$DEPLOY_COMMAND"
