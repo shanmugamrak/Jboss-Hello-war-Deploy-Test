@@ -29,7 +29,7 @@ jobs:
           # Set up JBoss CLI command
           #JBOSS_CLI="$JBOSS_HOME/bin/jboss-cli.sh" --connect --controller=$JBOSS_ENDPOINT #127.0.0.1:9990
           #DEPLOY_COMMAND="deploy dist/helloworld.war"
-          JBOSS_CLI=$JBOSS_HOME/bin/jboss-cli.sh -u=admin -p=Ridhanya@2015 --controller=http://127.0.0.1:9990 --connect --command="deploy /dist/helloworld.war --force"
+          JBOSS_CLI=$JBOSS_HOME/bin/jboss-cli.sh -u=admin -p=Ridhanya@2015 --controller=http://localhost:9990 --connect --command="deploy /dist/helloworld.war --force"
           
 
           # Execute JBoss CLI command to deploy the WAR file
