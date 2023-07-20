@@ -27,7 +27,7 @@ jobs:
           JBOSS_PASSWORD: ${{ secrets.JBOSS_PASSWORD }}
         run: |
           # Set up JBoss CLI command
-          JBOSS_CLI="$JBOSS_HOME/bin/jboss-cli.sh"
+          JBOSS_CLI="$JBOSS_HOME/bin/jboss-cli.sh" --connect --controller=127.0.0.1:9990
           DEPLOY_COMMAND="deploy dist/helloworld.war"
 
           # Execute JBoss CLI command to deploy the WAR file
