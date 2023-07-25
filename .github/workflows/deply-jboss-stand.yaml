@@ -33,8 +33,8 @@ jobs:
 
           # Use the appropriate deployment tool or method
           # For example, using `curl` to upload the WAR file
-          curl -u "$JBOSS_CLOUD_USERNAME:$JBOSS_CLOUD_PASSWORD" -X PUT "$JBOSS_CLOUD_URL/your-app" --data-binary "@$WAR_FILE_PATH"
-          
+          #curl -u "$JBOSS_CLOUD_USERNAME:$JBOSS_CLOUD_PASSWORD" -X PUT "$JBOSS_CLOUD_URL/your-app" --data-binary "@$WAR_FILE_PATH"
+          curl -u $JBOSS_CLOUD_USERNAME:$JBOSS_CLOUD_PASSWORD -X POST \ -H "Content-Type: application/octet-stream" \ --data-binary @$WAR_FILE_PATH \ $JBOSS_CLOUD_URL/management/upload          
           
       #- name: Deploy to JBoss
        # run: |
