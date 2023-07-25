@@ -14,11 +14,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           java-version: '17'
-          distribution: 'temurin'    
+          distribution: 'temurin'   
+          
       - name: login to JBoss
         env:
           JBOSS_ENDPOINT: http://127.0.0.1:9990/ #${{ vars.JBOSS_ENDPOINT }}
@@ -28,8 +30,8 @@ jobs:
           
       - name: Deploy to Jboss
         run: |
-          #curl -u -DJBOSS_USERNAME=jbadmin -DJBOSS_PASSWORD=Ridhanya@2015 -T $WAR_PATH $JBOSS_ENDPOINT/management-webapp/undeploy?name=$($WAR_PATH)
-          #sleep 5
+          curl -u -DJBOSS_USERNAME=jbadmin -DJBOSS_PASSWORD=Ridhanya@2015 -T $WAR_PATH $JBOSS_ENDPOINT/management-webapp/undeploy?name=$($WAR_PATH)
+          sleep 5
           curl -u -DJBOSS_USERNAME=jbadmin -DJBOSS_PASSWORD=Ridhanya@2015 -T $WAR_PATH $JBOSS_ENDPOINT/management-webapp/deploy?name=$($WAR_PATH)
                   
        
