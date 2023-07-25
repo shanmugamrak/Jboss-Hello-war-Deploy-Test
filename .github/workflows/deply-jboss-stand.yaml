@@ -25,6 +25,16 @@ jobs:
           java-version: '17'
           distribution: 'temurin'   
           
+      - name: Deploy to JBoss
+        run: |
+          # Adjust these variables to match your JBoss server credentials and URL
+          JBOSS_ENDPOINT=${{ vars.JBOSS_ENDPOINT }}
+          JBOSS_USERNAME=${{ secrets.JBOSS_USERNAME }}
+          JBOSS_PASSWORD=${{ secrets.JBOSS_PASSWORD }}
+          WAR_FILE_PATH=./dist/helloworld.war  # Adjust the path to your generated WAR file
+
+          curl -u $JBOSS_USERNAME:$JBOSS_PASSWORD -X POST \ -H "Content-Type: application/octet-stream" \ --data-binary @$WAR_FILE_PATH \ $JBOSS_ENDPOINT/management/upload          
+          
       #- name: login to JBoss
         #env:
          # JBOSS_ENDPOINT: ${{ vars.JBOSS_ENDPOINT }} #http://127.0.0.1:9990/
@@ -32,11 +42,11 @@ jobs:
           #JBOSS_PASSWORD: ${{ secrets.JBOSS_PASSWORD }} #Ridhanya@2015
           #WAR_PATH: 'dist/helloworld.war'
           
-      - name: Deploy to Jboss
-        run: |
-          curl -u -DJBOSS_USERNAME=jbadmin -DJBOSS_PASSWORD=Ridhanya@2015 -T $WAR_PATH $JBOSS_ENDPOINT/management-webapp/undeploy?name=$($WAR_PATH)
-          sleep 5
-          curl -u -DJBOSS_USERNAME=jbadmin -DJBOSS_PASSWORD=Ridhanya@2015 -T $WAR_PATH $JBOSS_ENDPOINT/management-webapp/deploy?name=$($WAR_PATH)
+      #- name: Deploy to Jboss
+       # run: |
+        #  curl -u -DJBOSS_USERNAME=jbadmin -DJBOSS_PASSWORD=Ridhanya@2015 -T $WAR_PATH $JBOSS_ENDPOINT/management-webapp/undeploy?name=$($WAR_PATH)
+         # sleep 5
+          #curl -u -DJBOSS_USERNAME=jbadmin -DJBOSS_PASSWORD=Ridhanya@2015 -T $WAR_PATH $JBOSS_ENDPOINT/management-webapp/deploy?name=$($WAR_PATH)
                   
        
       #- name: Deploy to Jboss
