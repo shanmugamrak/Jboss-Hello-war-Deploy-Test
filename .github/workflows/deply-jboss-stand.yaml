@@ -27,7 +27,7 @@ jobs:
           # and the necessary JBoss cloud configuration
           export JBOSS_CLOUD_USERNAME=${{ secrets.JBOSS_USERNAME }}
           export JBOSS_CLOUD_PASSWORD=${{ secrets.JBOSS_PASSWORD }}
-          export JBOSS_CLOUD_URL=${{ secrets.JBOSS_ENDPOINT }}
+          export JBOSS_CLOUD_URL=${{ vars.JBOSS_ENDPOINT }}
           export WAR_FILE_PATH=dist/helloworld.war
 
           # Use the appropriate deployment tool or method
