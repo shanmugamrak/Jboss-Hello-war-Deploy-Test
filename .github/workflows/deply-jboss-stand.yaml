@@ -7,10 +7,6 @@ on:
       #- master
 env:
   GITHUB_TOKEN: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}
-  #JBOSS_ENDPOINT: http://127.0.0.1:9990 #${{ vars.JBOSS_ENDPOINT }}
-  #JBOSS_USERNAME: ${{ secrets.JBOSS_USERNAME }} #jbadmin
-  #JBOSS_PASSWORD: ${{ secrets.JBOSS_PASSWORD }} #Ridhanya@2015
-  #WAR_PATH: 'dist/helloworld.war'
   
 jobs:
   deploy:
@@ -28,7 +24,7 @@ jobs:
       - name: Deploy to JBoss
         run: |
           # Adjust these variables to match your JBoss server credentials and URL
-          JBOSS_ENDPOINT=${{ vars.JBOSS_ENDPOINT }}
+          JBOSS_ENDPOINT=${{ secrets.JBOSS_ENDPOINT }}
           JBOSS_USERNAME=${{ secrets.JBOSS_USERNAME }}
           JBOSS_PASSWORD=${{ secrets.JBOSS_PASSWORD }}
           WAR_FILE_PATH=./dist/helloworld.war  # Adjust the path to your generated WAR file
