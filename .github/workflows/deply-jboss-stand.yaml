@@ -23,7 +23,7 @@ jobs:
           
       - name: login to JBoss
         env:
-          JBOSS_ENDPOINT: http://127.0.0.1:9990/ #${{ vars.JBOSS_ENDPOINT }}
+          JBOSS_ENDPOINT: ${{ vars.JBOSS_ENDPOINT }} #http://127.0.0.1:9990/
           JBOSS_USERNAME: jbadmin #${{ secrets.JBOSS_USERNAME }}
           JBOSS_PASSWORD: Ridhanya@2015 #${{ secrets.JBOSS_PASSWORD }}
           WAR_PATH: 'dist/helloworld.war'
