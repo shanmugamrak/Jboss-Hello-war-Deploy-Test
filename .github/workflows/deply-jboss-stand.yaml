@@ -21,15 +21,29 @@ jobs:
           java-version: '17'
           distribution: 'temurin'   
           
-      - name: Deploy to JBoss
+      - name: Deploy to JBoss Cloud
         run: |
-          # Adjust these variables to match your JBoss server credentials and URL
-          JBOSS_ENDPOINT=${{ secrets.JBOSS_ENDPOINT }}
-          JBOSS_USERNAME=${{ secrets.JBOSS_USERNAME }}
-          JBOSS_PASSWORD=${{ secrets.JBOSS_PASSWORD }}
-          WAR_FILE_PATH= ./dist/helloworld.war  # Adjust the path to your generated WAR file
+          # Replace the following placeholders with actual deployment commands
+          # and the necessary JBoss cloud configuration
+          export JBOSS_CLOUD_USERNAME=${{ secrets.JBOSS_USERNAME }}
+          export JBOSS_CLOUD_PASSWORD=${{ secrets.JBOSS_PASSWORD }}
+          export JBOSS_CLOUD_URL=${{ secrets.JBOSS_ENDPOINT }}
+          export WAR_FILE_PATH=dist/helloworld.war
 
-          curl -u $JBOSS_USERNAME:$JBOSS_PASSWORD -X POST \ -H "Content-Type: application/octet-stream" \ --data-binary @$WAR_FILE_PATH \ $JBOSS_ENDPOINT/management/upload          
+          # Use the appropriate deployment tool or method
+          # For example, using `curl` to upload the WAR file
+          curl -u "$JBOSS_CLOUD_USERNAME:$JBOSS_CLOUD_PASSWORD" -X PUT "$JBOSS_CLOUD_URL/your-app" --data-binary "@$WAR_FILE_PATH"
+          
+          
+      #- name: Deploy to JBoss
+       # run: |
+        #  # Adjust these variables to match your JBoss server credentials and URL
+         # JBOSS_ENDPOINT=${{ secrets.JBOSS_ENDPOINT }}
+          #JBOSS_USERNAME=${{ secrets.JBOSS_USERNAME }}
+          #JBOSS_PASSWORD=${{ secrets.JBOSS_PASSWORD }}
+          #WAR_FILE_PATH= ./dist/helloworld.war  # Adjust the path to your generated WAR file
+
+          #curl -u $JBOSS_USERNAME:$JBOSS_PASSWORD -X POST \ -H "Content-Type: application/octet-stream" \ --data-binary @$WAR_FILE_PATH \ $JBOSS_ENDPOINT/management/upload          
           
       #- name: login to JBoss
         #env:
