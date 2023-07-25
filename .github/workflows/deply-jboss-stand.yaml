@@ -5,7 +5,9 @@ on:
   #push:
     #branches:
       #- master
-
+env:
+  GITHUB_TOKEN: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}
+  
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -17,18 +19,25 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'    
-      #- name: Deploy WAR to JBoss
+      - name: login to JBoss
         env:
-          JBOSS_ENDPOINT: ${{ secrets.JBOSS_ENDPOINT }}
-          JBOSS_USERNAME: ${{ secrets.JBOSS_USERNAME }}
-          JBOSS_PASSWORD: ${{ secrets.JBOSS_PASSWORD }}
+          JBOSS_ENDPOINT: http://127.0.0.1:9990/ #${{ vars.JBOSS_ENDPOINT }}
+          JBOSS_USERNAME: jbadmin #${{ secrets.JBOSS_USERNAME }}
+          JBOSS_PASSWORD: Ridhanya@2015 #${{ secrets.JBOSS_PASSWORD }}
           WAR_PATH: 'dist/helloworld.war'
-       
+          
       - name: Deploy to Jboss
         run: |
-          curl -u -DJBOSS_USERNAME=$JBOSS_USERNAME -DJBOSS_PASSWORD=$JBOSS_PASSWORD -T $WAR_PATH $JBOSS_ENDPOINT/management-webapp/undeploy?name=$($WAR_PATH)
-          sleep 5
-          curl -u -DJBOSS_USERNAME=$JBOSS_USERNAME -DJBOSS_PASSWORD=$JBOSS_PASSWORD -T $WAR_PATH $JBOSS_ENDPOINT/management-webapp/deploy?name=$($WAR_PATH)
+          #curl -u -DJBOSS_USERNAME=jbadmin -DJBOSS_PASSWORD=Ridhanya@2015 -T $WAR_PATH $JBOSS_ENDPOINT/management-webapp/undeploy?name=$($WAR_PATH)
+          #sleep 5
+          curl -u -DJBOSS_USERNAME=jbadmin -DJBOSS_PASSWORD=Ridhanya@2015 -T $WAR_PATH $JBOSS_ENDPOINT/management-webapp/deploy?name=$($WAR_PATH)
+                  
+       
+      #- name: Deploy to Jboss
+       # run: |
+        #  curl -u -DJBOSS_USERNAME=$JBOSS_USERNAME -DJBOSS_PASSWORD=$JBOSS_PASSWORD -T $WAR_PATH $JBOSS_ENDPOINT/management-webapp/undeploy?name=$($WAR_PATH)
+         # sleep 5
+          #curl -u -DJBOSS_USERNAME=$JBOSS_USERNAME -DJBOSS_PASSWORD=$JBOSS_PASSWORD -T $WAR_PATH $JBOSS_ENDPOINT/management-webapp/deploy?name=$($WAR_PATH)
         
 #          DEPLOY_DIR=$(mktemp -d)
 #          cp $WAR_PATH $DEPLOY_DIR/
