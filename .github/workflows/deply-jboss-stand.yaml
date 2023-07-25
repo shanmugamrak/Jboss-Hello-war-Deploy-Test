@@ -27,7 +27,7 @@ jobs:
           JBOSS_ENDPOINT=${{ secrets.JBOSS_ENDPOINT }}
           JBOSS_USERNAME=${{ secrets.JBOSS_USERNAME }}
           JBOSS_PASSWORD=${{ secrets.JBOSS_PASSWORD }}
-          WAR_FILE_PATH= 'dist/helloworld.war'  # Adjust the path to your generated WAR file
+          WAR_FILE_PATH= './dist/helloworld.war'  # Adjust the path to your generated WAR file
 
           curl -u $JBOSS_USERNAME:$JBOSS_PASSWORD -X POST \ -H "Content-Type: application/octet-stream" \ --data-binary @$WAR_FILE_PATH \ $JBOSS_ENDPOINT/management/upload          
           
