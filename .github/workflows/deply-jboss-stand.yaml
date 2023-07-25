@@ -7,10 +7,10 @@ on:
       #- master
 env:
   GITHUB_TOKEN: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}
-  JBOSS_ENDPOINT: http://127.0.0.1:9990 #${{ vars.JBOSS_ENDPOINT }}
+  #JBOSS_ENDPOINT: http://127.0.0.1:9990 #${{ vars.JBOSS_ENDPOINT }}
   #JBOSS_USERNAME: ${{ secrets.JBOSS_USERNAME }} #jbadmin
   #JBOSS_PASSWORD: ${{ secrets.JBOSS_PASSWORD }} #Ridhanya@2015
-  WAR_PATH: 'dist/helloworld.war'
+  #WAR_PATH: 'dist/helloworld.war'
   
 jobs:
   deploy:
