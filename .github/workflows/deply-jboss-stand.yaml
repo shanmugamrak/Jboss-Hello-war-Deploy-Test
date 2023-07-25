@@ -29,7 +29,7 @@ jobs:
           export JBOSS_CLOUD_USERNAME=${{ secrets.JBOSS_USERNAME }}
           export JBOSS_CLOUD_PASSWORD=${{ secrets.JBOSS_PASSWORD }}
           export JBOSS_CLOUD_URL=${{ vars.JBOSS_ENDPOINT }}
-          export WAR_FILE_PATH= ./dist/helloworld.war
+          export WAR_FILE_PATH= dist/helloworld.war
 
           curl -u -DJBOSS_CLOUD_USERNAME=$JBOSS_CLOUD_USERNAME -DJBOSS_CLOUD_PASSWORD=$JBOSS_PASSWORD -T $WAR_FILE_PATH $JBOSS_CLOUD_URL/management-webapp/undeploy?name=$($WAR_FILE_PATH)
           sleep 5
