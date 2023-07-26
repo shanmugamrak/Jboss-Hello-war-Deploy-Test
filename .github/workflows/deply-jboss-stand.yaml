@@ -7,6 +7,10 @@ on:
     #  - master
 env:
   GITHUB_TOKEN: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}
+  JBOSS_ENDPOINT: ${{ vars.JBOSS_ENDPOINT }} #http://127.0.0.1:9990/
+  JBOSS_USERNAME: ${{ secrets.JBOSS_USERNAME }} #jbadmin
+  JBOSS_PASSWORD: ${{ secrets.JBOSS_PASSWORD }} #Ridhanya@2015
+  WAR_PATH: ./dist/helloworld.war
   
 jobs:
   deploy:
@@ -23,14 +27,14 @@ jobs:
           
 
       #- name: login to JBoss
-        env:
-          JBOSS_ENDPOINT: ${{ vars.JBOSS_ENDPOINT }} #http://127.0.0.1:9990/
-          JBOSS_USERNAME: ${{ secrets.JBOSS_USERNAME }} #jbadmin
-          JBOSS_PASSWORD: ${{ secrets.JBOSS_PASSWORD }} #Ridhanya@2015
-          WAR_PATH: ./dist/helloworld.war
+        #env:
+          #JBOSS_ENDPOINT: ${{ vars.JBOSS_ENDPOINT }} #http://127.0.0.1:9990/
+          #JBOSS_USERNAME: ${{ secrets.JBOSS_USERNAME }} #jbadmin
+          #JBOSS_PASSWORD: ${{ secrets.JBOSS_PASSWORD }} #Ridhanya@2015
+          #WAR_PATH: ./dist/helloworld.war
           
       - name: Deploy to Jboss
-        #shell: poweshell
+        #shell: powershell
         run: |
           curl.exe -u -DJBOSS_USERNAME=$JBOSS_USERNAME -DJBOSS_PASSWORD=$JBOSS_PASSWORD -T $WAR_PATH $JBOSS_ENDPOINT/management-webapp/undeploy?name=$($WAR_PATH)
           sleep 5
