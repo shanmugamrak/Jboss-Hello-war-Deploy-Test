@@ -25,6 +25,15 @@ jobs:
           java-version: '17'
           distribution: 'temurin'   
           
+      - name: Cache the Maven packages to speed up build
+        uses: actions/cache@v3
+        with:
+         path: ~/.m2
+         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+                
+
+      - name: Build project with Maven
+        run: mvn -B package --file pom.xml          
 
       #- name: login to JBoss
         #env:
