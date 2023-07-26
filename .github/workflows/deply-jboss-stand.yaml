@@ -10,7 +10,7 @@ env:
   
 jobs:
   deploy:
-    runs-on: windows-latest
+    runs-on: self-hosted #windows-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
