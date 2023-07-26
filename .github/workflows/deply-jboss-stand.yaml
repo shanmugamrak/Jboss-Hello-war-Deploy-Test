@@ -22,7 +22,7 @@ jobs:
           distribution: 'temurin'   
           
 
-      - name: login to JBoss
+      #- name: login to JBoss
         env:
           JBOSS_ENDPOINT: ${{ vars.JBOSS_ENDPOINT }} #http://127.0.0.1:9990/
           JBOSS_USERNAME: ${{ secrets.JBOSS_USERNAME }} #jbadmin
