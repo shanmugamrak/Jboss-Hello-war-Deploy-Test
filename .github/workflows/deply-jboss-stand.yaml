@@ -37,11 +37,11 @@ jobs:
           
       - name: Deploy WAR to WildFly
         run: |
-          curl --ipv4 -F "file=@${WAR_PATH}" \ -u "${JBOSS_USERNAME}:${JBOSS_PASSWORD}" \ "http://${JBOSS_ENDPOINT}:${JBOSS_PORT}/management/domain/servers/server-one/deployment/${APPLICATION_NAME}.war?operation=upload"
+          curl -F "file=@${WAR_PATH}" \ -u "${JBOSS_USERNAME}:${JBOSS_PASSWORD}" \ "http://${JBOSS_ENDPOINT}:${JBOSS_PORT}/management/domain/servers/server-one/deployment/${APPLICATION_NAME}.war?operation=upload"
 
       - name: Redeploy the application
         run: |
-          curl --ipv4 -X POST \ -u "${JBOSS_USERNAME}:${JBOSS_PASSWORD}" \ "http://${JBOSS_ENDPOINT}:${JBOSS_PORT}/management/domain/servers/server-one/deployment/${APPLICATION_NAME}.war?operation=redeploy"        
+          curl -X POST \ -u "${JBOSS_USERNAME}:${JBOSS_PASSWORD}" \ "http://${JBOSS_ENDPOINT}:${JBOSS_PORT}/management/domain/servers/server-one/deployment/${APPLICATION_NAME}.war?operation=redeploy"        
         
         
         
