@@ -7,10 +7,6 @@ on:
     #  - master
 env:
   GITHUB_TOKEN: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}
-  #JBOSS_ENDPOINT: ${{ vars.JBOSS_ENDPOINT }} #http://127.0.0.1:9990/
-  #JBOSS_USERNAME: ${{ secrets.JBOSS_USERNAME }} #jbadmin
-  #JBOSS_PASSWORD: ${{ secrets.JBOSS_PASSWORD }} #Ridhanya@2015
-  #WAR_PATH: 'dist/helloworld.war'
   
 jobs:
   deploy:
@@ -25,16 +21,6 @@ jobs:
           java-version: '17'
           distribution: 'temurin'   
           
-      #- name: Cache the Maven packages to speed up build
-       # uses: actions/cache@v3
-        #with:
-         #path: ~/.m2
-         #key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-                
-
-     # - name: Build project with Maven
-      #  run: mvn -B package --file pom.xml          
-
       #- name: login to JBoss
         env:
           JBOSS_ENDPOINT: ${{ vars.JBOSS_ENDPOINT }} #http://127.0.0.1:9990/
@@ -43,13 +29,12 @@ jobs:
           WAR_PATH: ./dist/helloworld.war
           
       - name: Deploy to Jboss
-        #shell: powershell
         run: |
           
-          curl -u $JBOSS_USERNAME:$JBOSS_PASSWORD -X POST \ -H "Content-Type: application/octet-stream" \ --data-binary @$WAR_PATH \ $JBOSS_ENDPOINT/management/upload       
-          #curl -u -DJBOSS_USERNAME=$JBOSS_USERNAME -DJBOSS_PASSWORD=$JBOSS_PASSWORD -T $WAR_PATH $JBOSS_ENDPOINT/management-webapp/undeploy?name=$($WAR_PATH)
-          #sleep 5
-          #curl -u -DJBOSS_USERNAME=$JBOSS_USERNAME -DJBOSS_PASSWORD=$JBOSS_PASSWORD -T $WAR_PATH $JBOSS_ENDPOINT/management-webapp/deploy?name=$($WAR_PATH)          
+          #curl -u $JBOSS_USERNAME:$JBOSS_PASSWORD -X POST \ -H "Content-Type: application/octet-stream" \ --data-binary @$WAR_PATH \ $JBOSS_ENDPOINT/management/upload       
+          curl.exe -u -DJBOSS_USERNAME=$JBOSS_USERNAME -DJBOSS_PASSWORD=$JBOSS_PASSWORD -T $WAR_PATH $JBOSS_ENDPOINT/management-webapp/undeploy?name=$($WAR_PATH)
+          sleep 5
+          curl.exe -u -DJBOSS_USERNAME=$JBOSS_USERNAME -DJBOSS_PASSWORD=$JBOSS_PASSWORD -T $WAR_PATH $JBOSS_ENDPOINT/management-webapp/deploy?name=$($WAR_PATH)          
           
         #  shell: powershell   
                 
