@@ -12,7 +12,7 @@ env:
   JBOSS_USERNAME: jbadmin
   JBOSS_PASSWORD: Ridhanya@2015
   APPLICATION_NAME: helloworld
-  WAR_PATH: ./dist	  
+  WAR_PATH: dist/  
   
 jobs:
   deploy:
