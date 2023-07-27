@@ -7,14 +7,14 @@ on:
     #  - master
 env:
   GITHUB_TOKEN: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}
-  JBOSS_ENDPOINT: ${{ vars.JBOSS_ENDPOINT }} #http://127.0.0.1:9990/
-  JBOSS_USERNAME: ${{ secrets.JBOSS_USERNAME }} #jbadmin
-  JBOSS_PASSWORD: ${{ secrets.JBOSS_PASSWORD }} #Ridhanya@2015
-  WAR_PATH: 'dist/helloworld.war'
+  #JBOSS_ENDPOINT: ${{ vars.JBOSS_ENDPOINT }} #http://127.0.0.1:9990/
+  #JBOSS_USERNAME: ${{ secrets.JBOSS_USERNAME }} #jbadmin
+  #JBOSS_PASSWORD: ${{ secrets.JBOSS_PASSWORD }} #Ridhanya@2015
+  #WAR_PATH: 'dist/helloworld.war'
   
 jobs:
   deploy:
-    runs-on: self-hosted #windows-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -36,18 +36,18 @@ jobs:
       #  run: mvn -B package --file pom.xml          
 
       #- name: login to JBoss
-        #env:
-          #JBOSS_ENDPOINT: ${{ vars.JBOSS_ENDPOINT }} #http://127.0.0.1:9990/
-          #JBOSS_USERNAME: ${{ secrets.JBOSS_USERNAME }} #jbadmin
-          #JBOSS_PASSWORD: ${{ secrets.JBOSS_PASSWORD }} #Ridhanya@2015
-          #WAR_PATH: ./dist/helloworld.war
+        env:
+          JBOSS_ENDPOINT: ${{ vars.JBOSS_ENDPOINT }} #http://127.0.0.1:9990/
+          JBOSS_USERNAME: ${{ secrets.JBOSS_USERNAME }} #jbadmin
+          JBOSS_PASSWORD: ${{ secrets.JBOSS_PASSWORD }} #Ridhanya@2015
+          WAR_PATH: ./dist/helloworld.war
           
       - name: Deploy to Jboss
         #shell: powershell
         run: |
-          curl.exe -u -DJBOSS_USERNAME=$JBOSS_USERNAME -DJBOSS_PASSWORD=$JBOSS_PASSWORD -T $WAR_PATH $JBOSS_ENDPOINT/management-webapp/undeploy?name=$($WAR_PATH)
+          curl -u -DJBOSS_USERNAME=$JBOSS_USERNAME -DJBOSS_PASSWORD=$JBOSS_PASSWORD -T $WAR_PATH $JBOSS_ENDPOINT/management-webapp/undeploy?name=$($WAR_PATH)
           sleep 5
-          curl.exe -u -DJBOSS_USERNAME=$JBOSS_USERNAME -DJBOSS_PASSWORD=$JBOSS_PASSWORD -T $WAR_PATH $JBOSS_ENDPOINT/management-webapp/deploy?name=$($WAR_PATH)          
+          curl -u -DJBOSS_USERNAME=$JBOSS_USERNAME -DJBOSS_PASSWORD=$JBOSS_PASSWORD -T $WAR_PATH $JBOSS_ENDPOINT/management-webapp/deploy?name=$($WAR_PATH)          
           
         #  shell: powershell   
                 
