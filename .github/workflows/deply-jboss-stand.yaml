@@ -11,7 +11,7 @@ env:
   JBOSS_PORT: 9990
   JBOSS_USERNAME: jbadmin
   JBOSS_PASSWORD: Ridhanya@2015
-  APPLICATION_NAME: helloworld
+  APPLICATION_NAME: jboss-as-helloworld #helloworld
   WAR_PATH: './dist' #${{ github.workspace }}/dist #shanmugamrak/Jboss-Hello-war-Deploy-Test/dist
   
 jobs:
