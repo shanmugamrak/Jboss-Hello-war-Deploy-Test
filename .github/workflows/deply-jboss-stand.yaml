@@ -33,7 +33,7 @@ jobs:
         run: |
      
           curl -u "$JBOSS_USERNAME:$JBOSS_PASSWORD" -X PUT "$JBOSS_ENDPOINT/your-app" --data-binary "@$WAR_PATH"
-          curl -u "$JBOSS_USERNAME:$JBOSS_PASSWORD" -X POST \ -H "Content-Type: application/octet-stream" \ --data-binary @$WAR_PATH \ $JBOSS_ENDPOINT/management/upload          
+          curl -u $JBOSS_USERNAME:$JBOSS_PASSWORD -X POST \ -H "Content-Type: application/octet-stream" \ --data-binary @$WAR_PATH \ $JBOSS_ENDPOINT/management/upload          
   
           #curl -u $JBOSS_USERNAME:$JBOSS_PASSWORD -X POST \ -H "Content-Type: application/octet-stream" \ --data-binary @$WAR_PATH \ $JBOSS_ENDPOINT/management/upload       
           #curl -u -DJBOSS_USERNAME=$JBOSS_USERNAME -DJBOSS_PASSWORD=$JBOSS_PASSWORD -T $WAR_PATH $JBOSS_ENDPOINT/management-webapp/undeploy?name=$($WAR_PATH)
