@@ -27,17 +27,19 @@ jobs:
           JBOSS_ENDPOINT: ${{ secrets.JBOSS_ENDPOINT }} #http://127.0.0.1:9990 #${{ vars.JBOSS_ENDPOINT }}
           JBOSS_USERNAME: ${{ secrets.JBOSS_USERNAME }} #jbadmin
           JBOSS_PASSWORD: ${{ secrets.JBOSS_PASSWORD }} #Ridhanya@2015
-          WAR_PATH: './dist/helloworld.war'
+          WAR_PATH: ./dist/helloworld.war
           
       - name: Deploy to Jboss
         run: |
-     
+        
+           curl -u $JBOSS_USERNAME:$JBOSS_PASSWORD -X POST \ -H "Content-Type: application/octet-stream" \ --data-binary @$WAR_PATH \ $JBOSS_ENDPOINT/management/upload
+          
           #curl -u "$JBOSS_USERNAME:$JBOSS_PASSWORD" -X PUT "$JBOSS_ENDPOINT/your-app" --data-binary "@$WAR_PATH"
           #curl -u $JBOSS_USERNAME:$JBOSS_PASSWORD -X POST \ -H "Content-Type: application/octet-stream" \ --data-binary @$WAR_PATH \ $JBOSS_ENDPOINT/management/upload          
   
           #curl -u -D JBOSS_USERNAME=$JBOSS_USERNAME -D JBOSS_PASSWORD=$JBOSS_PASSWORD -T $WAR_PATH $JBOSS_ENDPOINT/management-webapp/undeploy?name=$($WAR_PATH)
           #sleep 5
-          curl -u -D JBOSS_USERNAME=$JBOSS_USERNAME -D JBOSS_PASSWORD=$JBOSS_PASSWORD -T $WAR_PATH $JBOSS_ENDPOINT/management-webapp/deploy?name=$($WAR_PATH)          
+          #curl -u -D JBOSS_USERNAME=$JBOSS_USERNAME -D JBOSS_PASSWORD=$JBOSS_PASSWORD -T $WAR_PATH $JBOSS_ENDPOINT/management-webapp/deploy?name=$($WAR_PATH)          
           
         #  shell: powershell   
                 
