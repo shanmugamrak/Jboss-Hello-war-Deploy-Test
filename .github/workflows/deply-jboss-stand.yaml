@@ -7,6 +7,12 @@ on:
     #  - master
 env:
   GITHUB_TOKEN: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}
+  JBOSS_ENDPOINT: 3.110.117.134
+  JBOSS_PORT: 9990
+  JBOSS_USERNAME: jbadmin
+  JBOSS_PASSWORD: Ridhanya@2015
+  APPLICATION_NAME: helloworld
+  WAR_PATH: ./dist/		  
   
 jobs:
   deploy:
@@ -23,16 +29,37 @@ jobs:
           
      
      #- name: login to JBoss
-        env:
-          JBOSS_ENDPOINT: ${{ secrets.JBOSS_ENDPOINT }} #http://127.0.0.1:9990 #${{ vars.JBOSS_ENDPOINT }}
-          JBOSS_USERNAME: ${{ secrets.JBOSS_USERNAME }} #jbadmin
-          JBOSS_PASSWORD: ${{ secrets.JBOSS_PASSWORD }} #Ridhanya@2015
-          WAR_PATH: ./dist/helloworld.war
+        #env:
+          #JBOSS_ENDPOINT: ${{ secrets.JBOSS_ENDPOINT }} #http://127.0.0.1:9990 #${{ vars.JBOSS_ENDPOINT }}
+          #JBOSS_USERNAME: ${{ secrets.JBOSS_USERNAME }} #jbadmin
+          #JBOSS_PASSWORD: ${{ secrets.JBOSS_PASSWORD }} #Ridhanya@2015
+          #WAR_PATH: ./dist/helloworld.war
           
-      - name: Deploy to Jboss
+      - name: Deploy WAR to WildFly
         run: |
+          curl -F "file=@${WAR_PATH}" \ -u "${JBOSS_USERNAME}:${JBOSS_PASSWORD}" \ "http://${JBOSS_ENDPOINT}:${JBOSS_PORT}/management/domain/servers/server-one/deployment/${APPLICATION_NAME}.war?operation=upload"
+
+      - name: Redeploy the application
+        run: |
+          curl -X POST \ -u "${JBOSS_USERNAME}:${JBOSS_PASSWORD}" \ "http://${JBOSS_ENDPOINT}:${JBOSS_PORT}/management/domain/servers/server-one/deployment/${APPLICATION_NAME}.war?operation=redeploy"        
         
-           curl -u $JBOSS_USERNAME:$JBOSS_PASSWORD -X POST -H "Content-Type: application/octet-stream" --data-binary @$WAR_PATH $JBOSS_ENDPOINT/management/upload
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+           #curl -u $JBOSS_USERNAME:$JBOSS_PASSWORD -X POST -H "Content-Type: application/octet-stream" --data-binary @$WAR_PATH $JBOSS_ENDPOINT/management/upload
           
          
          
