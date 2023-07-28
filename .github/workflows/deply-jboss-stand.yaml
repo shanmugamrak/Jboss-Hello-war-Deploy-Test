@@ -12,7 +12,7 @@ env:
   JBOSS_USERNAME: jbadmin
   JBOSS_PASSWORD: Ridhanya@2015
   APPLICATION_NAME: jboss-as-helloworld #helloworld
-  WAR_PATH: ${{ github.workspace }}/dist #shanmugamrak/Jboss-Hello-war-Deploy-Test/dist #'./dist'
+  WAR_PATH: './dist' #shanmugamrak/Jboss-Hello-war-Deploy-Test/dist #'./dist'
   
 jobs:
   deploy:
