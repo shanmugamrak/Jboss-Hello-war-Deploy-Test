@@ -7,10 +7,10 @@ on:
     #  - master
 env:
   GITHUB_TOKEN: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}
-  #JBOSS_ENDPOINT: 65.0.75.144
+  #JBOSS_ENDPOINT: 13.234.120.105
   #JBOSS_PORT: 8080
   #JBOSS_USERNAME: jbadmin
-  #JBOSS_PASSWORD: Ridhanya@2015
+  #JBOSS_PASSWORD: jbadmin@123
   #APPLICATION_NAME: jboss-as-helloworld #helloworld
   #WAR_PATH: './dist' #shanmugamrak/Jboss-Hello-war-Deploy-Test/dist #'./dist'
   
@@ -34,8 +34,8 @@ jobs:
         run: |
           # Replace the following values with your WildFly server details and deployment package name
           WF_USERNAME=jbadmin
-          WF_PASSWORD=Ridhanya@2015
-          WF_SERVER_URL=http://65.0.75.144:8080
+          WF_PASSWORD=jbadmin@123
+          WF_SERVER_URL=http://13.234.120.105:8080
           DEPLOYMENT_PACKAGE=./dist/jboss-as-helloworld.war  # Replace with the actual name of your deployment package
 
           curl -u $WF_USERNAME:$WF_PASSWORD -X POST -F "file=@$DEPLOYMENT_PACKAGE" $WF_SERVER_URL/management/upload
@@ -45,9 +45,9 @@ jobs:
      
      #- name: login to JBoss
         #env:
-          #JBOSS_ENDPOINT: ${{ secrets.JBOSS_ENDPOINT }} #http://127.0.0.1:9990 #${{ vars.JBOSS_ENDPOINT }}
+          #JBOSS_ENDPOINT: ${{ secrets.JBOSS_ENDPOINT }}  #${{ vars.JBOSS_ENDPOINT }}
           #JBOSS_USERNAME: ${{ secrets.JBOSS_USERNAME }} #jbadmin
-          #JBOSS_PASSWORD: ${{ secrets.JBOSS_PASSWORD }} #Ridhanya@2015
+          #JBOSS_PASSWORD: ${{ secrets.JBOSS_PASSWORD }} #jbadmin@123
           #WAR_PATH: ./dist/helloworld.war
           
       #- name: Deploy WAR to WildFly
