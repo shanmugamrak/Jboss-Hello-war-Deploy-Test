@@ -36,7 +36,7 @@ jobs:
           WF_USERNAME=jbadmin
           WF_PASSWORD=Ridhanya@2015
           WF_SERVER_URL=http://65.0.75.144:9990
-          DEPLOYMENT_PACKAGE=jboss-as-helloworld.war  # Replace with the actual name of your deployment package
+          DEPLOYMENT_PACKAGE=./dist/jboss-as-helloworld.war  # Replace with the actual name of your deployment package
 
           curl -u $WF_USERNAME:$WF_PASSWORD -X POST -F "file=@$DEPLOYMENT_PACKAGE" $WF_SERVER_URL/management/upload
           curl -u $WF_USERNAME:$WF_PASSWORD -X POST $WF_SERVER_URL/management/deployments/$DEPLOYMENT_PACKAGE/enable
