@@ -7,12 +7,12 @@ on:
     #  - master
 env:
   GITHUB_TOKEN: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}
-  JBOSS_ENDPOINT: 65.0.75.144
-  JBOSS_PORT: 8080
-  JBOSS_USERNAME: jbadmin
-  JBOSS_PASSWORD: Ridhanya@2015
-  APPLICATION_NAME: jboss-as-helloworld #helloworld
-  WAR_PATH: './dist' #shanmugamrak/Jboss-Hello-war-Deploy-Test/dist #'./dist'
+  #JBOSS_ENDPOINT: 65.0.75.144
+  #JBOSS_PORT: 8080
+  #JBOSS_USERNAME: jbadmin
+  #JBOSS_PASSWORD: Ridhanya@2015
+  #APPLICATION_NAME: jboss-as-helloworld #helloworld
+  #WAR_PATH: './dist' #shanmugamrak/Jboss-Hello-war-Deploy-Test/dist #'./dist'
   
 jobs:
   deploy:
@@ -27,6 +27,21 @@ jobs:
           java-version: '17'
           distribution: 'temurin'   
           
+      - name: Build with Maven
+        run: mvn package  # Replace with your build command, e.g., gradle build
+
+      - name: Deploy to WildFly
+        run: |
+          # Replace the following values with your WildFly server details and deployment package name
+          WF_USERNAME=jbadmin
+          WF_PASSWORD=Ridhanya@2015
+          WF_SERVER_URL=http://65.0.75.144:9990
+          DEPLOYMENT_PACKAGE=jboss-as-helloworld.war  # Replace with the actual name of your deployment package
+
+          curl -u $WF_USERNAME:$WF_PASSWORD -X POST -F "file=@$DEPLOYMENT_PACKAGE" $WF_SERVER_URL/management/upload
+          curl -u $WF_USERNAME:$WF_PASSWORD -X POST $WF_SERVER_URL/management/deployments/$DEPLOYMENT_PACKAGE/enable
+          
+          
      
      #- name: login to JBoss
         #env:
@@ -35,13 +50,13 @@ jobs:
           #JBOSS_PASSWORD: ${{ secrets.JBOSS_PASSWORD }} #Ridhanya@2015
           #WAR_PATH: ./dist/helloworld.war
           
-      - name: Deploy WAR to WildFly
-        run: |
-          curl -F "file=@${WAR_PATH}" -u "${JBOSS_USERNAME}:${JBOSS_PASSWORD}" "http://${JBOSS_ENDPOINT}:${JBOSS_PORT}/management/domain/servers/server-one/deployment/${APPLICATION_NAME}.war?operation=upload"
+      #- name: Deploy WAR to WildFly
+       # run: |
+        #  curl -F "file=@${WAR_PATH}" -u "${JBOSS_USERNAME}:${JBOSS_PASSWORD}" "http://${JBOSS_ENDPOINT}:${JBOSS_PORT}/management/domain/servers/server-one/deployment/${APPLICATION_NAME}.war?operation=upload"
 
-      - name: Redeploy the application
-        run: |
-          curl -X POST -u "${JBOSS_USERNAME}:${JBOSS_PASSWORD}" "http://${JBOSS_ENDPOINT}:${JBOSS_PORT}/management/domain/servers/server-one/deployment/${APPLICATION_NAME}.war?operation=redeploy"        
+      #- name: Redeploy the application
+       # run: |
+        #  curl -X POST -u "${JBOSS_USERNAME}:${JBOSS_PASSWORD}" "http://${JBOSS_ENDPOINT}:${JBOSS_PORT}/management/domain/servers/server-one/deployment/${APPLICATION_NAME}.war?operation=redeploy"        
         
         
         
