@@ -7,7 +7,7 @@ on:
     #  - master
 env:
   GITHUB_TOKEN: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}
-  JBOSS_ENDPOINT: 3.110.117.134
+  JBOSS_ENDPOINT: 65.0.75.144
   JBOSS_PORT: 9990
   JBOSS_USERNAME: jbadmin
   JBOSS_PASSWORD: Ridhanya@2015
