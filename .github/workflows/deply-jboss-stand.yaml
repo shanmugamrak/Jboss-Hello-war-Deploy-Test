@@ -23,7 +23,7 @@ jobs:
         
       - name: list
         run : |
-          cd ${{ github.workspace }}
+          cd ${{ github.workspace }}/dist
           ls -la
         
       - name: Set up JDK 17
