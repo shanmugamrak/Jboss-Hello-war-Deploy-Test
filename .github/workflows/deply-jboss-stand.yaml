@@ -29,11 +29,11 @@ jobs:
       - name: Deploy to AWS
         run: |
           # Replace 'YOUR_EC2_PUBLIC_IP' with your AWS Ubuntu server's public IP address.
-          scp -i ${{ github.workspace }}/jboss.pem ${{ github.workspace }}/dist/helloworld.war ubuntu@13.234.120.105:/opt/wildfly/standalone/deployments/
+          sudo scp -i ${{ github.workspace }}/jboss.pem ${{ github.workspace }}/dist/helloworld.war ubuntu@13.234.120.105:/opt/wildfly/standalone/deployments/
 
           # Replace 'YOUR_EC2_PUBLIC_IP' with your AWS Ubuntu server's public IP address and 'YOUR_WILDFLY_PATH' with the actual path to your WildFly installation.
-          ssh -i ${{ github.workspace }}/jboss.pem ubuntu@13.234.120.105 '/opt/wildfly/bin/jboss-cli.sh --connect --command="undeploy helloworld.war"'
-          ssh -i ${{ github.workspace }}/jboss.pem ubuntu@13.234.120.105 '/opt/wildfly/bin/jboss-cli.sh --connect --command="deploy /opt/wildfly/standalone/deployments/helloworld.war"'
+          sudo ssh -i ${{ github.workspace }}/jboss.pem ubuntu@13.234.120.105 '/opt/wildfly/bin/jboss-cli.sh --connect --command="undeploy helloworld.war"'
+          sudo ssh -i ${{ github.workspace }}/jboss.pem ubuntu@13.234.120.105 '/opt/wildfly/bin/jboss-cli.sh --connect --command="deploy /opt/wildfly/standalone/deployments/helloworld.war"'
           
           
     #  - name: Install SSH client
