@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 env:
   GITHUB_TOKEN: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}
-  SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+  #SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
   
 jobs:
   deploy:
