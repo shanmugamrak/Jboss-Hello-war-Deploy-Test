@@ -31,6 +31,8 @@ jobs:
       #  run: mvn package  # Replace with your build command, e.g., gradle build
 
       - name: Deploy to WildFly
+        env: 
+          GITHUB_TOKEN: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}
         run: |
           # Replace the following values with your WildFly server details and deployment package name
           WF_USERNAME=jbadmin
