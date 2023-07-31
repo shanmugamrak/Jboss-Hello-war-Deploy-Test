@@ -35,7 +35,7 @@ jobs:
           # Replace the following values with your WildFly server details and deployment package name
           WF_USERNAME=jbadmin
           WF_PASSWORD=jbadmin@123
-          WF_SERVER_URL=http://13.234.120.105:9990
+          WF_SERVER_URL=http://13.234.120.105:8080
           DEPLOYMENT_PACKAGE=./dist/jboss-as-helloworld.war  # Replace with the actual name of your deployment package
 
           curl -u $WF_USERNAME:$WF_PASSWORD -X POST -F "file=@$DEPLOYMENT_PACKAGE" $WF_SERVER_URL/management/upload
