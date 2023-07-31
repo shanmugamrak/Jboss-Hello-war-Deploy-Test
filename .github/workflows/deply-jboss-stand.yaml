@@ -23,17 +23,31 @@ jobs:
           java-version: '17'
           distribution: 'temurin'   
           
+      - name: Install SSH client
+        run: sudo apt-get install -y openssh-client
+        
+        
       - name: Deploy to WildFly
-        env: 
-          GITHUB_TOKEN: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
-          WF_USERNAME=jbadmin
-          WF_PASSWORD=jbadmin@123
-          WF_SERVER_URL=http://13.234.120.105:9990
-          DEPLOYMENT_PACKAGE=${{ github.workspace }}/dist/jboss-as-helloworld.war  # Replace with the actual name of your deployment package
+          # Replace "your_server_ip" with the actual IP address of your AWS Ubuntu server.
+          # Replace "/path/to/your/war/file.war" with the path to your WAR file in the repository.
+          ssh -o StrictHostKeyChecking=no -i <(echo "$SSH_PRIVATE_KEY") ubuntu@13.234.120.105 'sudo service wildfly stop'
+          scp -o StrictHostKeyChecking=no -i <(echo "$SSH_PRIVATE_KEY") ${{ github.workspace }}/dist/jboss-as-helloworld.war ubuntu@13.234.120.105:/opt/wildfly/standalone/deployments/
+          ssh -o StrictHostKeyChecking=no -i <(echo "$SSH_PRIVATE_KEY") ubuntu@13.234.120.105 'sudo service wildfly start'        
+          
+     # - name: Deploy to WildFly
+      #  env: 
+       #   GITHUB_TOKEN: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}
+        #run: |
+         # WF_USERNAME=jbadmin
+          #WF_PASSWORD=jbadmin@123
+          #WF_SERVER_URL=http://13.234.120.105:9990
+          #DEPLOYMENT_PACKAGE=${{ github.workspace }}/dist/jboss-as-helloworld.war  # Replace with the actual name of your deployment package
 
-          curl -u $WF_USERNAME:$WF_PASSWORD -X POST -F "file=@$DEPLOYMENT_PACKAGE" $WF_SERVER_URL/management/upload
-          curl -u $WF_USERNAME:$WF_PASSWORD -X POST $WF_SERVER_URL/management/deployments/$DEPLOYMENT_PACKAGE/enable
+         # curl -u $WF_USERNAME:$WF_PASSWORD -X POST -F "file=@$DEPLOYMENT_PACKAGE" $WF_SERVER_URL/management/upload
+          #curl -u $WF_USERNAME:$WF_PASSWORD -X POST $WF_SERVER_URL/management/deployments/$DEPLOYMENT_PACKAGE/enable
           
           
      
