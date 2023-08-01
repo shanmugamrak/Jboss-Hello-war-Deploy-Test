@@ -30,7 +30,7 @@ jobs:
         run: |
           #Replace the following variables with your server details and credentials
           WILDFLY_HOST=13.234.120.105
-          WILDFLY_PORT=8080
+          WILDFLY_PORT=9990
           WILDFLY_USERNAME=jbadmin
           WILDFLY_PASSWORD=jbadmin@123
         
