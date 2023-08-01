@@ -16,6 +16,7 @@ jobs:
         run : |
           cd ${{ github.workspace }}/dist
           ls -l helloworld.war
+          chmod +r helloworld.war
         
       - name: Set up JDK 17
         uses: actions/setup-java@v3
