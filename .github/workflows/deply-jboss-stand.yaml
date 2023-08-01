@@ -29,7 +29,7 @@ jobs:
       - name: Deploy to Wildfly
         run: |
           #Replace the following variables with your server details and credentials
-          WILDFLY_HOST=https://13.234.120.105
+          WILDFLY_HOST=13.234.120.105
           WILDFLY_PORT=8080
           WILDFLY_USERNAME=jbadmin
           WILDFLY_PASSWORD=jbadmin@123
