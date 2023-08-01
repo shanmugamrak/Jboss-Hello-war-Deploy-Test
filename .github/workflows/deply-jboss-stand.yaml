@@ -23,19 +23,40 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: '17'
-          distribution: 'temurin'   
+          distribution: 'temurin'  
           
-      - name: Deploy to WildFly
-        env: 
-          GITHUB_TOKEN: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}
+          
+      - name: Deploy to Wildfly
         run: |
-          WF_USERNAME=jbadmin
-          WF_PASSWORD=jbadmin@123
-          WF_SERVER_URL=http://13.234.120.105:9990
-          DEPLOYMENT_PACKAGE=${{ github.workspace }}/dist/jboss-as-helloworld.war  # Replace with the actual name of your deployment package
+          #Replace the following variables with your server details and credentials
+          WILDFLY_HOST=https://13.234.120.105
+          WILDFLY_PORT=8080
+          WILDFLY_USERNAME=jbadmin
+          WILDFLY_PASSWORD=jbadmin@123
+        
+          #Replace 'your_app_name' with the name of your deployed application (e.g., myapp.war)
+          APP_NAME=${{ github.workspace }}/dist/jboss-as-helloworld.war
+        
+          #Upload the WAR file to Wildfly using curl
+          curl -u "$WILDFLY_USERNAME:$WILDFLY_PASSWORD" \
+             -X POST "http://$WILDFLY_HOST:$WILDFLY_PORT/management/add-content" \
+             -H "Content-Type: application/x-www-form-urlencoded" \
+             --data-urlencode "address=server-group=main-server-group" \
+             --data-urlencode "operation=upload" \
+             --data-urlencode "runtime-name=$APP_NAME" \
+             --data-binary "@$APP_NAME"          
+          
+     # - name: Deploy to WildFly
+      #  env: 
+       #   GITHUB_TOKEN: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}
+        #run: |
+         # WF_USERNAME=jbadmin
+          #WF_PASSWORD=jbadmin@123
+          #WF_SERVER_URL=http://13.234.120.105:9990
+          #DEPLOYMENT_PACKAGE=${{ github.workspace }}/dist/jboss-as-helloworld.war  # Replace with the actual name of your deployment package
 
-          curl -u $WF_USERNAME:$WF_PASSWORD -X POST -F "file=@$DEPLOYMENT_PACKAGE" $WF_SERVER_URL/management/upload
-          curl -u $WF_USERNAME:$WF_PASSWORD -X POST $WF_SERVER_URL/management/deployments/$DEPLOYMENT_PACKAGE/enable
+          #curl -u $WF_USERNAME:$WF_PASSWORD -X POST -F "file=@$DEPLOYMENT_PACKAGE" $WF_SERVER_URL/management/upload
+          #curl -u $WF_USERNAME:$WF_PASSWORD -X POST $WF_SERVER_URL/management/deployments/$DEPLOYMENT_PACKAGE/enable
           
           
       #- name: Install SSH client
