@@ -27,7 +27,7 @@ jobs:
           WAR_FILE= ${{ github.workspace }}/dist/helloworld.war
 
           # Replace "AWS_PUBLIC_IP" and "WILDFLY_PORT" with your AWS Ubuntu instance's public IP and JBoss WildFly port (e.g., 8080)
-          WILDFLY_URL="http://13.234.120.105/:9990/management"
+          WILDFLY_URL="http://13.234.120.105:9990/management"
 
           # Replace "WILDFLY_MANAGEMENT_USER" and "WILDFLY_MANAGEMENT_PASSWORD" with your JBoss WildFly management console credentials
           WILDFLY_MANAGEMENT_USER="${WILDFLY_USERNAME}"
