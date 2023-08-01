@@ -2,14 +2,13 @@ name: Deploy WAR to JBoss
 
 on:
  workflow_dispatch:
-  #push:
-   # branches:
-    #  - master
-
+ 
+env:
+  GITHUB_TOKEN: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}
+  
 jobs:
   deploy:
     runs-on: self-hosted
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
