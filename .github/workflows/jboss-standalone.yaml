@@ -21,14 +21,16 @@ jobs:
 
       - name: Deploy WAR to JBoss
         env:
-          JBOSS_ENDPOINT: ${{ secrets.JBOSS_ENDPOINT }} 
-          JBOSS_USERNAME: ${{ secrets.JBOSS_USERNAME }}
-          JBOSS_PASSWORD: ${{ secrets.JBOSS_PASSWORD }}
+          JBOSS_EAP_HOST: ${{ secrets.JBOSS_ENDPOINT }} 
+          JBOSS_EAP_USER: ${{ secrets.JBOSS_USERNAME }}
+          JBOSS_EAP_PASS: ${{ secrets.JBOSS_PASSWORD }}
         run: |
+           ./bin/jboss-cli.sh --connect --controller=$JBOSS_EAP_HOST --user=$JBOSS_EAP_USER --password=$JBOSS_EAP_PASS --command="deploy ${{ github.workspace }}/dist/helloworld.war"       
+         
           # Set up JBoss CLI command
           #JBOSS_CLI="$JBOSS_HOME/bin/jboss-cli.sh" --connect --controller=$JBOSS_ENDPOINT #127.0.0.1:9990
           #DEPLOY_COMMAND="deploy dist/helloworld.war"
-          JBOSS_CLI=$JBOSS_HOME/bin/jboss-cli.sh -u=jbadmin -p=Ridhanya@2015 --controller=http://127.0.0.1:9990 --connect --command="deploy /dist/helloworld.war --force"
+          #JBOSS_CLI=$JBOSS_HOME/bin/jboss-cli.sh -u=jbadmin -p=Ridhanya@2015 --controller=http://127.0.0.1:9990 --connect --command="deploy /dist/helloworld.war --force"
           
 
           # Execute JBoss CLI command to deploy the WAR file
