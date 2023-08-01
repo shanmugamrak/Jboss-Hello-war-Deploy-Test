@@ -4,8 +4,6 @@ on:
   workflow_dispatch:
 env:
   GITHUB_TOKEN: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}
-  #SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-  #SSH_PVT_KEY: ${{ secrets.SSH_PVT_KEY }}
   
 jobs:
   deploy:
@@ -14,182 +12,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
         
-      #- name: list
-       # run : |
-        #  cd dist
-         # ls -la
-        
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'temurin'  
           
-          
-      - name: Deploy to Wildfly
+      - name: Deploy to Jboss
         run: |
-          #Replace the following variables with your server details and credentials
-          WILDFLY_HOST= ${{ secrets.JBOSS_ENDPOINT }}
-          WILDFLY_PORT= ${{ secrets.JBOSS_PORT }}
-          WILDFLY_USERNAME= ${{ secrets.JBOSS_USERNAME }}
-          WILDFLY_PASSWORD= ${{ secrets.JBOSS_PASSWORD }}
-          APP_NAME= ./dist/helloworld.war
-        
-          curl -u "$WILDFLY_USERNAME:$WILDFLY_PASSWORD" \
-             -X POST "http://$WILDFLY_HOST:$WILDFLY_PORT/management/add-content" \
-             -H "Content-Type: application/x-www-form-urlencoded" \
-             --data-urlencode "address=server-group=main-server-group" \
-             --data-urlencode "operation=upload" \
-             --data-urlencode "runtime-name=$APP_NAME" \
-             --data-binary "@$APP_NAME"          
-          
-     # - name: Deploy to WildFly
-      #  env: 
-       #   GITHUB_TOKEN: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}
-        #run: |
-         # WF_USERNAME=jbadmin
-          #WF_PASSWORD=jbadmin@123
-          #WF_SERVER_URL=http://13.234.120.105:9990
-          #DEPLOYMENT_PACKAGE=${{ github.workspace }}/dist/jboss-as-helloworld.war  # Replace with the actual name of your deployment package
-
-          #curl -u $WF_USERNAME:$WF_PASSWORD -X POST -F "file=@$DEPLOYMENT_PACKAGE" $WF_SERVER_URL/management/upload
-          #curl -u $WF_USERNAME:$WF_PASSWORD -X POST $WF_SERVER_URL/management/deployments/$DEPLOYMENT_PACKAGE/enable
-          
-          
-      #- name: Install SSH client
-       # run: sudo apt-get install -y openssh-client          
-                    
-
-      #- name: Deploy to AWS
-       # run: |
-        #  # Replace 'YOUR_EC2_PUBLIC_IP' with your AWS Ubuntu server's public IP address.
-         # sudo scp -i ${{ github.workspace }}/jboss.pem ${{ github.workspace }}/dist/helloworld.war ubuntu@13.234.120.105:/opt/wildfly/standalone/deployments/
-
-          # Replace 'YOUR_EC2_PUBLIC_IP' with your AWS Ubuntu server's public IP address and 'YOUR_WILDFLY_PATH' with the actual path to your WildFly installation.
-          #sudo ssh -i ${{ github.workspace }}/jboss.pem ubuntu@13.234.120.105 '/opt/wildfly/bin/jboss-cli.sh --connect --command="undeploy helloworld.war"'
-          #sudo ssh -i ${{ github.workspace }}/jboss.pem ubuntu@13.234.120.105 '/opt/wildfly/bin/jboss-cli.sh --connect --command="deploy /opt/wildfly/standalone/deployments/helloworld.war"'
-          
-          
-
-            
-        
-      #- name: Deploy to WildFly
-       # env:
-        #  SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        #run: |
-          # Replace "your_server_ip" with the actual IP address of your AWS Ubuntu server.
-          # Replace "/path/to/your/war/file.war" with the path to your WAR file in the repository.
-         # ssh -o StrictHostKeyChecking=no -i <(echo "$SSH_PRIVATE_KEY") ubuntu@13.234.120.105 'sudo service wildfly stop'
-          #scp -o StrictHostKeyChecking=no -i <(echo "$SSH_PRIVATE_KEY") ${{ github.workspace }}/dist/jboss-as-helloworld.war ubuntu@13.234.120.105:/opt/wildfly/standalone/deployments/
-          #ssh -o StrictHostKeyChecking=no -i <(echo "$SSH_PRIVATE_KEY") ubuntu@13.234.120.105 'sudo service wildfly start'        
-          
-          
-          
-     
-     #- name: login to JBoss
-        #env:
-          #JBOSS_ENDPOINT: ${{ secrets.JBOSS_ENDPOINT }}  #${{ vars.JBOSS_ENDPOINT }}
-          #JBOSS_USERNAME: ${{ secrets.JBOSS_USERNAME }} #jbadmin
-          #JBOSS_PASSWORD: ${{ secrets.JBOSS_PASSWORD }} #jbadmin@123
-          #WAR_PATH: ./dist/helloworld.war
-          
-      #- name: Deploy WAR to WildFly
-       # run: |
-        #  curl -F "file=@${WAR_PATH}" -u "${JBOSS_USERNAME}:${JBOSS_PASSWORD}" "http://${JBOSS_ENDPOINT}:${JBOSS_PORT}/management/domain/servers/server-one/deployment/${APPLICATION_NAME}.war?operation=upload"
-
-      #- name: Redeploy the application
-       # run: |
-        #  curl -X POST -u "${JBOSS_USERNAME}:${JBOSS_PASSWORD}" "http://${JBOSS_ENDPOINT}:${JBOSS_PORT}/management/domain/servers/server-one/deployment/${APPLICATION_NAME}.war?operation=redeploy"        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-           #curl -u $JBOSS_USERNAME:$JBOSS_PASSWORD -X POST -H "Content-Type: application/octet-stream" --data-binary @$WAR_PATH $JBOSS_ENDPOINT/management/upload
-          
-         
-         
-         
-         
-         
-         
-         
-         
-         
-         
-         
-         
-         
-         
-         
-         #curl -u "$JBOSS_USERNAME:$JBOSS_PASSWORD" -X PUT "$JBOSS_ENDPOINT/your-app" --data-binary "@$WAR_PATH"
-          #curl -u $JBOSS_USERNAME:$JBOSS_PASSWORD -X POST \ -H "Content-Type: application/octet-stream" \ --data-binary @$WAR_PATH \ $JBOSS_ENDPOINT/management/upload          
-  
-          #curl -u -D JBOSS_USERNAME=$JBOSS_USERNAME -D JBOSS_PASSWORD=$JBOSS_PASSWORD -T $WAR_PATH $JBOSS_ENDPOINT/management-webapp/undeploy?name=$($WAR_PATH)
+          JBOSS_ENDPOINT= ${{ secrets.JBOSS_ENDPOINT }}
+          #WILDFLY_PORT= ${{ secrets.JBOSS_PORT }}
+          JBOSS_USERNAME= ${{ secrets.JBOSS_USERNAME }}
+          JBOSS_PASSWORD= ${{ secrets.JBOSS_PASSWORD }}
+          WAR_PATH= ./dist/helloworld.war
+          #curl -u -DJBOSS_USERNAME=$JBOSS_USERNAME -DJBOSS_PASSWORD=$JBOSS_PASSWORD -T $WAR_PATH $JBOSS_ENDPOINT/management-webapp/undeploy?name=$($WAR_PATH)
           #sleep 5
-          #curl -u -D JBOSS_USERNAME=$JBOSS_USERNAME -D JBOSS_PASSWORD=$JBOSS_PASSWORD -T $WAR_PATH $JBOSS_ENDPOINT/management-webapp/deploy?name=$($WAR_PATH)          
           
-        #  shell: powershell   
-                
-          
-      #- name: Deploy to JBoss Cloud
-       # run: |
-          # Replace the following placeholders with actual deployment commands
-          # and the necessary JBoss cloud configuration
-        #  export JBOSS_CLOUD_USERNAME=${{ secrets.JBOSS_USERNAME }}
-         # export JBOSS_CLOUD_PASSWORD=${{ secrets.JBOSS_PASSWORD }}
-          #export JBOSS_CLOUD_URL=${{ vars.JBOSS_ENDPOINT }}
-          #export WAR_FILE_PATH= dist/helloworld.war
-          
-          # Use the appropriate deployment tool or method
-          # For example, using `curl` to upload the WAR file
-         # curl -u "$JBOSS_CLOUD_USERNAME:$JBOSS_CLOUD_PASSWORD" -X PUT "$JBOSS_CLOUD_URL/your-app" --data-binary "@$WAR_FILE_PATH"
-          #curl -u $JBOSS_CLOUD_USERNAME:$JBOSS_CLOUD_PASSWORD -X POST \ -H "Content-Type: application/octet-stream" \ --data-binary @$WAR_FILE_PATH \ $JBOSS_CLOUD_URL/management/upload          
-          
-
-          #curl -u -DJBOSS_CLOUD_USERNAME=$JBOSS_CLOUD_USERNAME -DJBOSS_CLOUD_PASSWORD=$JBOSS_PASSWORD -T $WAR_FILE_PATH $JBOSS_CLOUD_URL/management-webapp/undeploy?name=$($WAR_FILE_PATH)
-          #sleep 5
-          #curl -u -DJBOSS_CLOUD_USERNAME=$JBOSS_CLOUD_USERNAME -DJBOSS_CLOUD_PASSWORD=$JBOSS_PASSWORD -T $WAR_FILE_PATH $JBOSS_CLOUD_URL/management-webapp/deploy?name=$($WAR_FILE_PATH)
-   
-
-          
-      #- name: Deploy to JBoss
-       # run: |
-        #  # Adjust these variables to match your JBoss server credentials and URL
-         # JBOSS_ENDPOINT=${{ secrets.JBOSS_ENDPOINT }}
-          #JBOSS_USERNAME=${{ secrets.JBOSS_USERNAME }}
-          #JBOSS_PASSWORD=${{ secrets.JBOSS_PASSWORD }}
-          #WAR_FILE_PATH= ./dist/helloworld.war  # Adjust the path to your generated WAR file
-
-          #curl -u $JBOSS_USERNAME:$JBOSS_PASSWORD -X POST \ -H "Content-Type: application/octet-stream" \ --data-binary @$WAR_FILE_PATH \ $JBOSS_ENDPOINT/management/upload          
-          
-                  
-       
-      #- name: Deploy to Jboss
-       # run: |
-        #  curl -u -DJBOSS_USERNAME=$JBOSS_USERNAME -DJBOSS_PASSWORD=$JBOSS_PASSWORD -T $WAR_PATH $JBOSS_ENDPOINT/management-webapp/undeploy?name=$($WAR_PATH)
-         # sleep 5
-          #curl -u -DJBOSS_USERNAME=$JBOSS_USERNAME -DJBOSS_PASSWORD=$JBOSS_PASSWORD -T $WAR_PATH $JBOSS_ENDPOINT/management-webapp/deploy?name=$($WAR_PATH)
-          
-          
-        
-#          DEPLOY_DIR=$(mktemp -d)
-#          cp $WAR_PATH $DEPLOY_DIR/
-#          JBOSS_CLI=$DEPLOY_DIR/jboss-cli.sh
-#          echo "embed-server --admin-only=true" > $JBOSS_CLI
-#          echo "deploy $DEPLOY_DIR/$(basename $WAR_PATH)" >> $JBOSS_CLI
-#          echo "exit" >> $JBOSS_CLI
-#          $JBOSS_CLI --connect --controller=$JBOSS_ENDPOINT --user=$JBOSS_USERNAME --password=$JBOSS_PASSWORD
-#          rm -rf $DEPLOY_DIR
+          curl -u -DJBOSS_USERNAME=$JBOSS_USERNAME -DJBOSS_PASSWORD=$JBOSS_PASSWORD -T $WAR_PATH $JBOSS_ENDPOINT/management-webapp/deploy?name=$($WAR_PATH)
