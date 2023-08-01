@@ -25,18 +25,31 @@ jobs:
           java-version: '17'
           distribution: 'temurin'   
           
-      - name: Install SSH client
-        run: sudo apt-get install -y openssh-client          
+      - name: Deploy to WildFly
+        env: 
+          GITHUB_TOKEN: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}
+        run: |
+          WF_USERNAME=jbadmin
+          WF_PASSWORD=jbadmin@123
+          WF_SERVER_URL=http://13.234.120.105:9990
+          DEPLOYMENT_PACKAGE=${{ github.workspace }}/dist/jboss-as-helloworld.war  # Replace with the actual name of your deployment package
+
+          curl -u $WF_USERNAME:$WF_PASSWORD -X POST -F "file=@$DEPLOYMENT_PACKAGE" $WF_SERVER_URL/management/upload
+          curl -u $WF_USERNAME:$WF_PASSWORD -X POST $WF_SERVER_URL/management/deployments/$DEPLOYMENT_PACKAGE/enable
+          
+          
+      #- name: Install SSH client
+       # run: sudo apt-get install -y openssh-client          
                     
 
-      - name: Deploy to AWS
-        run: |
-          # Replace 'YOUR_EC2_PUBLIC_IP' with your AWS Ubuntu server's public IP address.
-          sudo scp -i ${{ github.workspace }}/jboss.pem ${{ github.workspace }}/dist/helloworld.war ubuntu@13.234.120.105:/opt/wildfly/standalone/deployments/
+      #- name: Deploy to AWS
+       # run: |
+        #  # Replace 'YOUR_EC2_PUBLIC_IP' with your AWS Ubuntu server's public IP address.
+         # sudo scp -i ${{ github.workspace }}/jboss.pem ${{ github.workspace }}/dist/helloworld.war ubuntu@13.234.120.105:/opt/wildfly/standalone/deployments/
 
           # Replace 'YOUR_EC2_PUBLIC_IP' with your AWS Ubuntu server's public IP address and 'YOUR_WILDFLY_PATH' with the actual path to your WildFly installation.
-          sudo ssh -i ${{ github.workspace }}/jboss.pem ubuntu@13.234.120.105 '/opt/wildfly/bin/jboss-cli.sh --connect --command="undeploy helloworld.war"'
-          sudo ssh -i ${{ github.workspace }}/jboss.pem ubuntu@13.234.120.105 '/opt/wildfly/bin/jboss-cli.sh --connect --command="deploy /opt/wildfly/standalone/deployments/helloworld.war"'
+          #sudo ssh -i ${{ github.workspace }}/jboss.pem ubuntu@13.234.120.105 '/opt/wildfly/bin/jboss-cli.sh --connect --command="undeploy helloworld.war"'
+          #sudo ssh -i ${{ github.workspace }}/jboss.pem ubuntu@13.234.120.105 '/opt/wildfly/bin/jboss-cli.sh --connect --command="deploy /opt/wildfly/standalone/deployments/helloworld.war"'
           
           
 
@@ -52,17 +65,6 @@ jobs:
           #scp -o StrictHostKeyChecking=no -i <(echo "$SSH_PRIVATE_KEY") ${{ github.workspace }}/dist/jboss-as-helloworld.war ubuntu@13.234.120.105:/opt/wildfly/standalone/deployments/
           #ssh -o StrictHostKeyChecking=no -i <(echo "$SSH_PRIVATE_KEY") ubuntu@13.234.120.105 'sudo service wildfly start'        
           
-     # - name: Deploy to WildFly
-      #  env: 
-       #   GITHUB_TOKEN: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}
-        #run: |
-         # WF_USERNAME=jbadmin
-          #WF_PASSWORD=jbadmin@123
-          #WF_SERVER_URL=http://13.234.120.105:9990
-          #DEPLOYMENT_PACKAGE=${{ github.workspace }}/dist/jboss-as-helloworld.war  # Replace with the actual name of your deployment package
-
-         # curl -u $WF_USERNAME:$WF_PASSWORD -X POST -F "file=@$DEPLOYMENT_PACKAGE" $WF_SERVER_URL/management/upload
-          #curl -u $WF_USERNAME:$WF_PASSWORD -X POST $WF_SERVER_URL/management/deployments/$DEPLOYMENT_PACKAGE/enable
           
           
      
