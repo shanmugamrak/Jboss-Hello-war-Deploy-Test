@@ -18,14 +18,27 @@ jobs:
           java-version: '17'
           distribution: 'temurin'  
           
-      - name: Deploy to Jboss
+      - name: Deploy to WildFly
         env:
-          JBOSS_ENDPOINT: ${{ secrets.JBOSS_ENDPOINT }}
-          JBOSS_USERNAME: ${{ secrets.JBOSS_USERNAME }}
-          JBOSS_PASSWORD: ${{ secrets.JBOSS_PASSWORD }}
-          WAR_PATH: ${{ github.workflow }}/dist/helloworld.war        
+          WILDFLY_USERNAME: ${{ secrets.WILDFLY_USERNAME }}
+          WILDFLY_PASSWORD: ${{ secrets.WILDFLY_PASSWORD }}
         run: |
-          #curl -u -DJBOSS_USERNAME=$JBOSS_USERNAME -DJBOSS_PASSWORD=$JBOSS_PASSWORD -T $WAR_PATH $JBOSS_ENDPOINT/management-webapp/undeploy?name=$($WAR_PATH)
-          #sleep 5
-          
-          curl -u -DJBOSS_USERNAME=$JBOSS_USERNAME -DJBOSS_PASSWORD=$JBOSS_PASSWORD -T $WAR_PATH $JBOSS_ENDPOINT/management-webapp/deploy?name=$($WAR_PATH)
+          # Replace "YOUR_WAR_FILE.war" with your actual WAR file name
+          WAR_FILE= ${{ github.workspace }}/dist/helloworld.war
+
+          # Replace "AWS_PUBLIC_IP" and "WILDFLY_PORT" with your AWS Ubuntu instance's public IP and JBoss WildFly port (e.g., 8080)
+          WILDFLY_URL="http://13.234.120.105/:9990/management"
+
+          # Replace "WILDFLY_MANAGEMENT_USER" and "WILDFLY_MANAGEMENT_PASSWORD" with your JBoss WildFly management console credentials
+          WILDFLY_MANAGEMENT_USER="${WILDFLY_USERNAME}"
+          WILDFLY_MANAGEMENT_PASSWORD="${WILDFLY_PASSWORD}"
+
+          # Upload the WAR file to WildFly deployment directory
+          curl -u "${WILDFLY_MANAGEMENT_USER}:${WILDFLY_MANAGEMENT_PASSWORD}" \
+            -F "file=@${WAR_FILE}" \
+            "${WILDFLY_URL}/add-content"
+
+          # Trigger the deployment of the uploaded WAR file
+          curl -u "${WILDFLY_MANAGEMENT_USER}:${WILDFLY_MANAGEMENT_PASSWORD}" \
+            -d "content=${WAR_FILE}&operation=deploy" \
+            "${WILDFLY_URL}/content"
