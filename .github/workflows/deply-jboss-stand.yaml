@@ -24,7 +24,7 @@ jobs:
           JBOSS_ENDPOINT: ${{ secrets.JBOSS_ENDPOINT }}  #${{ vars.JBOSS_ENDPOINT }}
           JBOSS_USERNAME: ${{ secrets.JBOSS_USERNAME }} #jbadmin
           JBOSS_PASSWORD: ${{ secrets.JBOSS_PASSWORD }} #jbadmin@123
-          JBOSS_PORT: ${{ secretes.JBOSS_PORT }}
+          JBOSS_PORT: ${{ secrets.JBOSS_PORT }}
           APPLICATION_NAME: helloworld
           WAR_PATH: ${{github.workspace }}/dist
           
