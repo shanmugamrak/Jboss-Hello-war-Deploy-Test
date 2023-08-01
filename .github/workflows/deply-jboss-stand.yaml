@@ -28,11 +28,11 @@ jobs:
           APPLICATION_NAME: helloworld
           WAR_PATH: ${{github.workspace }}/dist
           
-      - name: Deploy WAR to WildFly
+     # - name: Deploy WAR to WildFly
         run: |
           curl -F "file=@${WAR_PATH}" -u "${JBOSS_USERNAME}:${JBOSS_PASSWORD}" "http://${JBOSS_ENDPOINT}:${JBOSS_PORT}/management/domain/servers/server-one/deployment/${APPLICATION_NAME}.war?operation=upload"
 
-      - name: Redeploy the application
-        run: |
+          #- name: Redeploy the application
+          # run: |
           curl -X POST -u "${JBOSS_USERNAME}:${JBOSS_PASSWORD}" "http://${JBOSS_ENDPOINT}:${JBOSS_PORT}/management/domain/servers/server-one/deployment/${APPLICATION_NAME}.war?operation=redeploy"        
          
