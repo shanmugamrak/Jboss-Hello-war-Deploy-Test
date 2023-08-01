@@ -19,12 +19,12 @@ jobs:
           distribution: 'temurin'  
           
       - name: Deploy to Jboss
+        env:
+          JBOSS_ENDPOINT: ${{ secrets.JBOSS_ENDPOINT }}
+          JBOSS_USERNAME: ${{ secrets.JBOSS_USERNAME }}
+          JBOSS_PASSWORD: ${{ secrets.JBOSS_PASSWORD }}
+          WAR_PATH: ${{ github.workflow }}/dist/helloworld.war        
         run: |
-          JBOSS_ENDPOINT= ${{ secrets.JBOSS_ENDPOINT }}
-          #WILDFLY_PORT= ${{ secrets.JBOSS_PORT }}
-          JBOSS_USERNAME= ${{ secrets.JBOSS_USERNAME }}
-          JBOSS_PASSWORD= ${{ secrets.JBOSS_PASSWORD }}
-          WAR_PATH= ${{ github.workflow }}/dist/helloworld.war
           #curl -u -DJBOSS_USERNAME=$JBOSS_USERNAME -DJBOSS_PASSWORD=$JBOSS_PASSWORD -T $WAR_PATH $JBOSS_ENDPOINT/management-webapp/undeploy?name=$($WAR_PATH)
           #sleep 5
           
