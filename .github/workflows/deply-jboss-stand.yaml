@@ -25,7 +25,9 @@ jobs:
           java-version: '17'
           distribution: 'temurin'   
           
-          
+      - name: Install SSH client
+        run: sudo apt-get install -y openssh-client          
+                    
 
       - name: Deploy to AWS
         run: |
@@ -37,8 +39,7 @@ jobs:
           sudo ssh -i ${{ github.workspace }}/jboss.pem ubuntu@13.234.120.105 '/opt/wildfly/bin/jboss-cli.sh --connect --command="deploy /opt/wildfly/standalone/deployments/helloworld.war"'
           
           
-    #  - name: Install SSH client
-     #   run: sudo apt-get install -y openssh-client
+
             
         
       #- name: Deploy to WildFly
