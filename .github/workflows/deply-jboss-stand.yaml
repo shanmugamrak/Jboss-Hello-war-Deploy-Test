@@ -30,7 +30,7 @@ jobs:
           
           
         run: |
-          chmod +r ${{ github.workspace }}/dist/helloworld.war
+          chmod +rx ${{ github.workspace }}/dist/helloworld.war
           curl -F "file=@${WAR_PATH}" -u "${JBOSS_USERNAME}:${JBOSS_PASSWORD}" "http://${JBOSS_ENDPOINT}:${JBOSS_PORT}/management/domain/servers/server-one/deployment/${APPLICATION_NAME}.war?operation=upload"
           curl -X POST -u "${JBOSS_USERNAME}:${JBOSS_PASSWORD}" "http://${JBOSS_ENDPOINT}:${JBOSS_PORT}/management/domain/servers/server-one/deployment/${APPLICATION_NAME}.war?operation=redeploy"        
          
