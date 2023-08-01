@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
 env:
   GITHUB_TOKEN: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}
-  SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-  SSH_PVT_KEY: ${{ secrets.SSH_PVT_KEY }}
+  #SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+  #SSH_PVT_KEY: ${{ secrets.SSH_PVT_KEY }}
   
 jobs:
   deploy:
@@ -33,12 +33,8 @@ jobs:
           WILDFLY_PORT= ${{ secrets.JBOSS_PORT }}
           WILDFLY_USERNAME= ${{ secrets.JBOSS_USERNAME }}
           WILDFLY_PASSWORD= ${{ secrets.JBOSS_PASSWORD }}
-          
+          APP_NAME= ${{ github.workspace }}/dist/helloworld.war
         
-          #Replace 'your_app_name' with the name of your deployed application (e.g., myapp.war)
-          APP_NAME=${{ github.workspace }}/dist/helloworld.war
-        
-          #Upload the WAR file to Wildfly using curl
           curl -u "$WILDFLY_USERNAME:$WILDFLY_PASSWORD" \
              -X POST "http://$WILDFLY_HOST:$WILDFLY_PORT/management/add-content" \
              -H "Content-Type: application/x-www-form-urlencoded" \
