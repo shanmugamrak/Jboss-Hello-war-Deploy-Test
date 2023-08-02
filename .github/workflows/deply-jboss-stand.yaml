@@ -26,7 +26,7 @@ jobs:
           JBOSS_ENDPOINT: ${{ vars.JBOSS_ENDPOINT }} 
           #WAR_PATH: ${{github.workspace }}/dist/helloworld.war
         run: |  
-          WAR_PATH: ${{github.workspace }}/dist/helloworld.war
+          WAR_PATH=${{github.workspace }}/dist/helloworld.war
           chmod +rx $WAR_PATH
           curl -u -DJBOSS_USERNAME=$JBOSS_USERNAME -DJBOSS_PASSWORD=$JBOSS_PASSWORD -T $WAR_PATH $JBOSS_ENDPOINT/management-webapp/undeploy?name=$($WAR_PATH)
           sleep 5
