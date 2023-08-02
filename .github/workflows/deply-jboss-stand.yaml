@@ -30,8 +30,8 @@ jobs:
 
         run: |
           #chmod +rx ${{ github.workspace }}/dist/helloworld.war
-          curl -F "file=${{github.workspace }}/dist" -u "${JBOSS_USERNAME}:${JBOSS_PASSWORD}" "http://${JBOSS_ENDPOINT}:${JBOSS_PORT}/management/domain/deployment/${APPLICATION_NAME}.war?operation=upload"
-          curl -X POST -u "${JBOSS_USERNAME}:${JBOSS_PASSWORD}" "http://${JBOSS_ENDPOINT}:${JBOSS_PORT}/management/domain/deployment/${APPLICATION_NAME}.war?operation=redeploy"        
+          #curl -F "file=${{github.workspace }}/dist" -u "${JBOSS_USERNAME}:${JBOSS_PASSWORD}" "http://${JBOSS_ENDPOINT}:${JBOSS_PORT}/management/domain/deployment/${APPLICATION_NAME}.war?operation=upload"
+          curl -F "file=${{github.workspace }}/dist" -X POST -u "${JBOSS_USERNAME}:${JBOSS_PASSWORD}" "http://${JBOSS_ENDPOINT}:${JBOSS_PORT}/management/domain/deployment/${APPLICATION_NAME}.war?operation=deploy"        
   
           
           
