@@ -11,6 +11,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        
+      - name: list 
+        run: |
+         cd ${{ github.workspace }}/dist
+         ls -la
 
 
       - name: Set up JDK 17
