@@ -26,11 +26,18 @@ jobs:
           JBOSS_PASSWORD: ${{ secrets.JBOSS_PASSWORD }} #jbadmin@123
           JBOSS_PORT: ${{ secrets.JBOSS_PORT }}
           APPLICATION_NAME: helloworld
-          WAR_PATH: ${{github.workspace }}/dist/
-          
-          
+          WAR_PATH: ${{github.workspace }}/dist
+
         run: |
-          chmod +rx ${{ github.workspace }}/dist/helloworld.war
-          curl -F "file=@${WAR_PATH}" -u "${JBOSS_USERNAME}:${JBOSS_PASSWORD}" "http://${JBOSS_ENDPOINT}:${JBOSS_PORT}/management/domain/servers/server-one/deployment/${APPLICATION_NAME}.war?operation=upload"
-          curl -X POST -u "${JBOSS_USERNAME}:${JBOSS_PASSWORD}" "http://${JBOSS_ENDPOINT}:${JBOSS_PORT}/management/domain/servers/server-one/deployment/${APPLICATION_NAME}.war?operation=redeploy"        
+          #chmod +rx ${{ github.workspace }}/dist/helloworld.war
+          curl -F "file=${{github.workspace }}/dist" -u "${JBOSS_USERNAME}:${JBOSS_PASSWORD}" "http://${JBOSS_ENDPOINT}:${JBOSS_PORT}/management/domain/deployment/${APPLICATION_NAME}.war?operation=upload"
+          curl -X POST -u "${JBOSS_USERNAME}:${JBOSS_PASSWORD}" "http://${JBOSS_ENDPOINT}:${JBOSS_PORT}/management/domain/deployment/${APPLICATION_NAME}.war?operation=redeploy"        
+  
+          
+          
+          
+        #run: |
+         # chmod +rx ${{ github.workspace }}/dist/helloworld.war
+          #curl -F "file=@${WAR_PATH}" -u "${JBOSS_USERNAME}:${JBOSS_PASSWORD}" "http://${JBOSS_ENDPOINT}:${JBOSS_PORT}/management/domain/servers/server-one/deployment/${APPLICATION_NAME}.war?operation=upload"
+          #curl -X POST -u "${JBOSS_USERNAME}:${JBOSS_PASSWORD}" "http://${JBOSS_ENDPOINT}:${JBOSS_PORT}/management/domain/servers/server-one/deployment/${APPLICATION_NAME}.war?operation=redeploy"        
          
