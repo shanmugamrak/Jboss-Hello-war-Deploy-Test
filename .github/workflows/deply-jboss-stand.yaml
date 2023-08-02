@@ -21,7 +21,7 @@ jobs:
           
       - name: login to JBoss and deploy war file
         env:
-          JBOSS_ENDPOINT: ${{ secrets.JBOSS_ENDPOINT }}  #${{ vars.JBOSS_ENDPOINT }}
+          JBOSS_ENDPOINT: ${{ vars.JBOSS_ENDPOINT }}  #${{ vars.JBOSS_ENDPOINT }}
           JBOSS_USERNAME: ${{ secrets.JBOSS_USERNAME }} #jbadmin
           JBOSS_PASSWORD: ${{ secrets.JBOSS_PASSWORD }} #jbadmin@123
           JBOSS_PORT: ${{ secrets.JBOSS_PORT }}
