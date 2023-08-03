@@ -31,7 +31,7 @@ jobs:
           JBOSS_ENDPOINT: ${{ vars.JBOSS_ENDPOINT }} 
           WAR_PATH: ${{github.workspace }}/dist/helloworld.war
           
-      - run: |
+        run: |
 
          !/bin/bash
          echo "Deployment JBOSS..."
