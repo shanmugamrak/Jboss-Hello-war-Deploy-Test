@@ -33,7 +33,7 @@ jobs:
           
         run: |
 
-         !/bin/bash
+         #!/bin/bash
          echo "Deployment JBOSS..."
 
          echo "Creating temp dir"
