@@ -30,12 +30,35 @@ jobs:
           JBOSS_PASSWORD: ${{ secrets.JBOSS_PASSWORD }} 
           JBOSS_ENDPOINT: ${{ vars.JBOSS_ENDPOINT }} 
           WAR_PATH: ${{github.workspace }}/dist/helloworld.war
+          
+      - run: |
 
-        run: |  
-          chmod 755 ${{github.workspace }}/dist/helloworld.war
-          curl -u $JBOSS_USERNAME:$JBOSS_PASSWORD -T $WAR_PATH $JBOSS_ENDPOINT/management-webapp/undeploy?name=$($WAR_PATH)
-          sleep 5
-          curl -u $JBOSS_USERNAME:$JBOSS_PASSWORD -T $WAR_PATH $JBOSS_ENDPOINT/management-webapp/deploy?name=$($WAR_PATH)          
+         !/bin/bash
+         echo "Deployment JBOSS..."
+
+         echo "Creating temp dir"
+         sshpass -p XZHo9iuevmBPyaHEUsuK ssh root@13.234.120.105 'mkdir -v $PACKAGETEMP'
+
+         echo "Copy files to target server"
+         sshpass -p XZHo9iuevmBPyaHEUsuK scp -r -v $WAR_PATH root@13.234.120.105:$PACKAGETEMP
+
+         echo "Running undeploy command"
+         sshpass -p XZHo9iuevmBPyaHEUsuK ssh root@13.234.120.105 '/opt/wildfly/bin/jboss-cli.sh --connect --controller=13.234.120.105 --user=jbadmin --password=jbadmin@123 --command="undeploy helloworld.war --server-groups=HelloWorld"'
+
+         echo "Running deploy command"
+         sshpass -p XZHo9iuevmBPyaHEUsuK ssh root@13.234.120.105 '/opt/wildfly/bin/jboss-cli.sh --connect --controller=13.234.120.105 --user=jbadmin --password=jbadmin@123 --command="deploy $PACKAGETEMP/helloworld.war --server-groups=HelloWorld"'
+
+         echo "Check deployment status"
+         sshpass -p XZHo9iuevmBPyaHEUsuK ssh root@13.234.120.105 '/opt/wildfly/bin/jboss-cli.sh --connect --controller=13.234.120.105 --user=jbadmin --password=jbadmin@123 --command="deployment-info --name=helloworld.war"'
+      
+
+ 
+
+      #  run: |  
+       #   chmod 755 ${{github.workspace }}/dist/helloworld.war
+        #  curl -u $JBOSS_USERNAME:$JBOSS_PASSWORD -T $WAR_PATH $JBOSS_ENDPOINT/management-webapp/undeploy?name=$($WAR_PATH)
+         # sleep 5
+          #curl -u $JBOSS_USERNAME:$JBOSS_PASSWORD -T $WAR_PATH $JBOSS_ENDPOINT/management-webapp/deploy?name=$($WAR_PATH)          
 
           
 #        run: |  
