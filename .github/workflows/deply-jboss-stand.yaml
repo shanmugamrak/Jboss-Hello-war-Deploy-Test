@@ -36,6 +36,7 @@ jobs:
 
          echo "Copy files to target server"
          #chmod +rx ubuntu@13.234.120.105:PACKAGETEMP/temp -p $AWS_SSH_KEY
+         ssh -i ${{github.workspace }}/jboss.pem ubuntu@your_aws_instance_ip
          chmod +rx ${{github.workspace }}/dist/helloworld.war
          rsync -av -e "ssh -i ${{ secrets.AWS_SSH_KEY }}" "${{github.workspace}}/dist/helloworld.war" ubuntu@13.234.120.105:PACKAGETEMP/temp
          
