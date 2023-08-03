@@ -29,21 +29,22 @@ jobs:
           JBOSS_USERNAME: ${{ secrets.JBOSS_USERNAME }} 
           JBOSS_PASSWORD: ${{ secrets.JBOSS_PASSWORD }} 
           JBOSS_ENDPOINT: ${{ vars.JBOSS_ENDPOINT }} 
+          AWS_SSH_KEY: ${{ secrets.AWS_SSH_KEY }}
           WAR_PATH: ${{github.workspace }}/dist/helloworld.war
           
         run: |
 
          echo "Copy files to target server"
-         sshpass -p ${{ secrets.AWS_SSH_KEY }} sudo scp -r -v ${{github.workspace }}/dist/helloworld.war ubuntu@13.234.120.105:PACKAGETEMP/temp
+         sshpass -p $AWS_SSH_KEY sudo scp -r -v ${{github.workspace }}/dist/helloworld.war ubuntu@13.234.120.105:PACKAGETEMP/temp
 
          #echo "Running undeploy command"
-         #sshpass -p ${{ secrets.AWS_SSH_KEY }} ssh ubuntu@13.234.120.105 '/opt/wildfly/bin/jboss-cli.sh --connect --controller=13.234.120.105 --user=jbadmin --password=jbadmin@123 --command="undeploy helloworld.war --server-groups=HelloWorld"'
+         #sshpass -p $AWS_SSH_KEY ssh ubuntu@13.234.120.105 '/opt/wildfly/bin/jboss-cli.sh --connect --controller=13.234.120.105 --user=jbadmin --password=jbadmin@123 --command="undeploy helloworld.war --server-groups=HelloWorld"'
 
          #echo "Running deploy command"
-         #sshpass -p ${{ secrets.AWS_SSH_KEY }} ssh ubuntu@13.234.120.105 '/opt/wildfly/bin/jboss-cli.sh --connect --controller=13.234.120.105 --user=jbadmin --password=jbadmin@123 --command="deploy PACKAGETEMP/temp/helloworld.war --server-groups=HelloWorld"'
+         #sshpass -p $AWS_SSH_KEY ssh ubuntu@13.234.120.105 '/opt/wildfly/bin/jboss-cli.sh --connect --controller=13.234.120.105 --user=jbadmin --password=jbadmin@123 --command="deploy PACKAGETEMP/temp/helloworld.war --server-groups=HelloWorld"'
 
          #echo "Check deployment status"
-         #sshpass -p ${{ secrets.AWS_SSH_KEY }} ssh ubuntu@13.234.120.105 '/opt/wildfly/bin/jboss-cli.sh --connect --controller=13.234.120.105 --user=jbadmin --password=jbadmin@123 --command="deployment-info --name=helloworld.war"'
+         #sshpass -p $AWS_SSH_KEY ssh ubuntu@13.234.120.105 '/opt/wildfly/bin/jboss-cli.sh --connect --controller=13.234.120.105 --user=jbadmin --password=jbadmin@123 --command="deployment-info --name=helloworld.war"'
       
 
  
