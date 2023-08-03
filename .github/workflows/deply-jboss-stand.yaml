@@ -38,13 +38,13 @@ jobs:
          sshpass -p $AWS_SSH_KEY sudo scp -r -v ${{github.workspace }}/dist/helloworld.war ubuntu@13.234.120.105:PACKAGETEMP/temp
 
          #echo "Running undeploy command"
-         #sshpass -p $AWS_SSH_KEY ssh ubuntu@13.234.120.105 '/opt/wildfly/bin/jboss-cli.sh --connect --controller=13.234.120.105 --user=jbadmin --password=jbadmin@123 --command="undeploy helloworld.war --server-groups=HelloWorld"'
+         #sshpass -p $AWS_SSH_KEY ssh ubuntu@13.234.120.105 '/opt/wildfly/bin/jboss-cli.sh --connect --controller=13.234.120.105 --user=$JBOSS_USERNAME --password=$JBOSS_PASSWORD --command="undeploy helloworld.war --server-groups=HelloWorld"'
 
          #echo "Running deploy command"
-         #sshpass -p $AWS_SSH_KEY ssh ubuntu@13.234.120.105 '/opt/wildfly/bin/jboss-cli.sh --connect --controller=13.234.120.105 --user=jbadmin --password=jbadmin@123 --command="deploy PACKAGETEMP/temp/helloworld.war --server-groups=HelloWorld"'
+         #sshpass -p $AWS_SSH_KEY ssh ubuntu@13.234.120.105 '/opt/wildfly/bin/jboss-cli.sh --connect --controller=13.234.120.105 --user=$JBOSS_USERNAME --password=$JBOSS_PASSWORD --command="deploy PACKAGETEMP/temp/helloworld.war --server-groups=HelloWorld"'
 
          #echo "Check deployment status"
-         #sshpass -p $AWS_SSH_KEY ssh ubuntu@13.234.120.105 '/opt/wildfly/bin/jboss-cli.sh --connect --controller=13.234.120.105 --user=jbadmin --password=jbadmin@123 --command="deployment-info --name=helloworld.war"'
+         #sshpass -p $AWS_SSH_KEY ssh ubuntu@13.234.120.105 '/opt/wildfly/bin/jboss-cli.sh --connect --controller=13.234.120.105 --user=$JBOSS_USERNAME --password=$JBOSS_PASSWORD --command="deployment-info --name=helloworld.war"'
       
 
  
