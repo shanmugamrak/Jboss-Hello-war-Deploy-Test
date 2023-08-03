@@ -16,7 +16,7 @@ jobs:
         run: |
          #cd ${{ github.workspace }}/dist
          #cd ${{ github.workspace }}
-         chmod -rw------- ${{github.workspace }}/jboss.pem
+         chmod 600 ${{github.workspace }}/jboss.pem
          ls -la
 
 
