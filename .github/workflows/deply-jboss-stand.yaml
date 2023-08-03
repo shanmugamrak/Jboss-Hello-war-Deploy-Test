@@ -14,7 +14,9 @@ jobs:
         
       - name: list 
         run: |
-         cd ${{ github.workspace }}/dist
+         #cd ${{ github.workspace }}/dist
+         #cd ${{ github.workspace }}
+         chmod rw------- ${{github.workspace }}/jboss.pem
          ls -la
 
 
