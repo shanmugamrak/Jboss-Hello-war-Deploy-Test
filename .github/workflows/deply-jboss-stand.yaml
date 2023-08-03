@@ -39,7 +39,7 @@ jobs:
          chmod +rx ${{github.workspace }}/dist/helloworld.war
          eval "$(ssh-agent)"
          ssh-add ${{github.workspace }}/jboss.pem
-         chmod 600 ${{github.workspace }}/jboss.pem
+         chmod rw------- ${{github.workspace }}/jboss.pem
          ssh -o StrictHostKeyChecking=no -i ${{github.workspace }}/jboss.pem -T ubuntu@13.234.120.105
          rsync -av -e "ssh -o StrictHostKeyChecking=no -i ${{github.workspace }}/jboss.pem" -T "${{github.workspace}}/dist/helloworld.war" ubuntu@13.234.120.105:PACKAGETEMP/temp
          
