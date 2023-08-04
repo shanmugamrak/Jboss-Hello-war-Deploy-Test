@@ -42,7 +42,7 @@ jobs:
          eval "$(ssh-agent)"
          ssh-add ${{github.workspace }}/jboss.pem
          #-vvv -o StrictHostKeyChecking=no
-         ssh -vvv -o StrictHostKeyChecking=no -i ${{github.workspace }}/jboss.pem -T ubuntu@13.234.120.105
+         ssh -o StrictHostKeyChecking=no -i ${{github.workspace }}/jboss.pem -T ubuntu@13.234.120.105
          chmod +rx ${{github.workspace }}/dist/helloworld.war
          rsync -av -e "ssh -vvv -o StrictHostKeyChecking=no -i ${{github.workspace }}/jboss.pem" -T "${{github.workspace}}/dist/helloworld.war" ubuntu@13.234.120.105:PACKAGETEMP/temp
          
