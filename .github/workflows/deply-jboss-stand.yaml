@@ -37,7 +37,7 @@ jobs:
           
         run: |
 
-         echo "Copy files to target server"
+         echo "Copy files to target server" #
          sshpass -p XZHo9iuevmBPyaHEUsuK scp -r -v ${{github.workspace }}/dist/helloworld.war ubuntu@13.234.120.105:$PACKAGETEMP/helloworld.war
 
          
