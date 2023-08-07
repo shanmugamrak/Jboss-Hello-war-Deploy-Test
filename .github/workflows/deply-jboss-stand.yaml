@@ -37,8 +37,10 @@ jobs:
           
         run: |
 
-         echo "Copy files to target server" #
-         sshpass -p XZHo9iuevmBPyaHEUsuK scp -r -v ${{github.workspace }}/dist/helloworld.war ubuntu@13.234.120.105:$PACKAGETEMP/helloworld.war
+         echo "Copy files to target server" 
+         sync -av -e "ssh -o StrictHostKeyChecking=no -i ${{github.workspace }}/jboss.pem" -T "${{github.workspace}}/dist/helloworld.war" ubuntu@13.234.120.105:PACKAGETEMP/temp
+         
+         #sshpass -p XZHo9iuevmBPyaHEUsuK scp -r -v ${{github.workspace }}/dist/helloworld.war ubuntu@13.234.120.105:$PACKAGETEMP/helloworld.war
 
          
          #chmod +rx ubuntu@13.234.120.105:PACKAGETEMP/temp -p $AWS_SSH_KEY
@@ -48,7 +50,7 @@ jobs:
          #-vvv -o StrictHostKeyChecking=no
          #ssh -o StrictHostKeyChecking=no -i ${{github.workspace }}/jboss.pem -T ubuntu@13.234.120.105
          #chmod +rx ${{github.workspace }}/dist/helloworld.war
-         #scp -av -e "ssh -vvv -o StrictHostKeyChecking=no -i ${{github.workspace }}/jboss.pem" -T "${{github.workspace}}/dist/helloworld.war" ubuntu@13.234.120.105:PACKAGETEMP/temp
+         #sync -av -e "ssh -vvv -o StrictHostKeyChecking=no -i ${{github.workspace }}/jboss.pem" -T "${{github.workspace}}/dist/helloworld.war" ubuntu@13.234.120.105:PACKAGETEMP/temp
          
          #sshpass -p $AWS_SSH_KEY sudo scp -r -v ${{github.workspace }}/dist/helloworld.war ubuntu@13.234.120.105:PACKAGETEMP/temp
          #scp -r -v ${{github.workspace }}/dist/helloworld.war ubuntu@13.234.120.105:PACKAGETEMP/temp -p $AWS_SSH_KEY
