@@ -38,7 +38,7 @@ jobs:
         run: |
 
          echo "Copy files to target server" 
-         sync -e "ssh -o StrictHostKeyChecking=no -i ${{github.workspace }}/jboss.pem" -T "${{github.workspace}}/dist/helloworld.war" ubuntu@13.234.120.105:PACKAGETEMP/temp
+         sync "ssh -o StrictHostKeyChecking=no -i ${{github.workspace }}/jboss.pem" -T "${{github.workspace}}/dist/helloworld.war" ubuntu@13.234.120.105:PACKAGETEMP/temp
          
          #sshpass -p XZHo9iuevmBPyaHEUsuK scp -r -v ${{github.workspace }}/dist/helloworld.war ubuntu@13.234.120.105:$PACKAGETEMP/helloworld.war
 
