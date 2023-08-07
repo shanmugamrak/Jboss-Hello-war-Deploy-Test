@@ -38,8 +38,8 @@ jobs:
         run: |
 
          echo "Copy files to target server" 
-         ssh ubuntu@13.234.120.105 "mkdir -p /PACKAGETEMP/temp/"
-         sync -avz -e "ssh -o StrictHostKeyChecking=no -i ${{github.workspace }}/jboss.pem" "${{github.workspace}}/dist/helloworld.war" ubuntu@13.234.120.105:/PACKAGETEMP/temp/
+         sudo ssh ubuntu@13.234.120.105 "mkdir -p /PACKAGETEMP/temp/"
+         sudo sync -avz -e "ssh -o StrictHostKeyChecking=no -i ${{github.workspace }}/jboss.pem" "${{github.workspace}}/dist/helloworld.war" ubuntu@13.234.120.105:/PACKAGETEMP/temp/
          #sync "${{github.workspace}}/dist/helloworld.war" ubuntu@13.234.120.105:PACKAGETEMP/temp/
          #sync "ssh -o StrictHostKeyChecking=no -i ${{github.workspace }}/jboss.pem" "${{github.workspace}}/dist/helloworld.war" ubuntu@13.234.120.105:PACKAGETEMP/temp/
          
