@@ -38,7 +38,7 @@ jobs:
         run: |
 
          echo "Creating temp dir"
-         sshpass -p ${{github.workspace }}/rakbank-ubuntuserver1-key.pem ssh ubuntu@13.234.120.105 'sudo mkdir -v PACKAGETEMP' 
+         sshpass -p ${{github.workspace }}/rakbank-ubuntuserver1-key.pem ssh root@13.234.120.105 'mkdir -v PACKAGETEMP' 
         
          #echo "Copy files to target server"
          #sshpass -p P@ssw0rd scp -r -v ${{github.workspace }}/dist/helloworld.war ubuntu@13.234.120.105:$PACKAGETEMP/hello.war
