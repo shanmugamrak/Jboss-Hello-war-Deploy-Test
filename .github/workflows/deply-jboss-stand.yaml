@@ -38,13 +38,13 @@ jobs:
         run: |
 
          echo "Creating temp dir"
-         sshpass -p XZHo9iuevmBPyaHEUsuK ssh ubuntu@13.234.120.105 'sudo mkdir PACKAGETEMP' 
+         sshpass -p ${{github.workspace }}/rakbank-ubuntuserver1-key.pem ssh ubuntu@13.234.120.105 'sudo mkdir -v PACKAGETEMP' 
         
          #echo "Copy files to target server"
          #sshpass -p P@ssw0rd scp -r -v ${{github.workspace }}/dist/helloworld.war ubuntu@13.234.120.105:$PACKAGETEMP/hello.war
          
          #echo "Running undeploy command"
-         #sshpass -p ${{github.workspace }}/jboss.pem ubuntu@13.234.120.105 '/opt/wildfly/bin/jboss-cli.sh --connect --controller=13.234.120.105 --user=$JBOSS_USERNAME --password=$JBOSS_PASSWORD --command="undeploy helloworld.war --server-groups=HelloWorld"'
+         #sshpass -p ${{github.workspace }}/rakbank-ubuntuserver1-key.pem ubuntu@13.234.120.105 '/opt/wildfly/bin/jboss-cli.sh --connect --controller=13.234.120.105 --user=$JBOSS_USERNAME --password=$JBOSS_PASSWORD --command="undeploy helloworld.war --server-groups=HelloWorld"'
 
          #echo "Running deploy command"
          #sshpass -p $AWS_SSH_KEY ssh ubuntu@13.234.120.105 '/opt/wildfly/bin/jboss-cli.sh --connect --controller=13.234.120.105 --user=$JBOSS_USERNAME --password=$JBOSS_PASSWORD --command="deploy PACKAGETEMP/temp/helloworld.war --server-groups=HelloWorld"'
