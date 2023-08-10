@@ -15,9 +15,9 @@ jobs:
       - name: list 
         run: |
          #cd ${{ github.workspace }}/dist
-         #cd ${{ github.workspace }}
-         chmod 400 ${{github.workspace }}/rakbank-ubuntuserver1-key.pem
-         chmod +rx ${{github.workspace }}/dist/helloworld.war
+         cd ${{ github.workspace }}
+         #chmod 400 ${{github.workspace }}/rakbank-ubuntuserver1-key.pem
+         #chmod +rx ${{github.workspace }}/dist/helloworld.war
          ls -la
 
 
